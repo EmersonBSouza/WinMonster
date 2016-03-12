@@ -18,18 +18,19 @@ public class ArvoreHuffman {
 			no.setFrequencia(no.getFilhoDir().getFrequencia()+ no.getFilhoEsq().getFrequencia());
 			
 			arvores.inserirComPrioridade(no);
-			arvoreFinal = (ArvoreHuffman)criaArvore(fila);
+			criaArvore(fila);
+			raiz = (NoArvore)arvores.recuperarInicio().getObjeto();
 			
 		}
 		
 		return arvoreFinal;
 	}
 	
-	public void codificarMensagem(ArvoreHuffman arvore){
-		if(arvore!=null){
-			codificarMensagem(arvore.getFilhoEsq);
+	public void codificarMensagem(NoArvore No){
+		if(raiz!=null){
+			codificarMensagem(raiz.getFilhoEsq());
 			//Manipulação
-			codificarMensagem(arvore.getFilhoDir());
+			codificarMensagem(raiz.getFilhoDir());
 		}
 	}
 }
