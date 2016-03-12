@@ -2,8 +2,17 @@ package br.uefs.WinMonster.controller;
 
 public class WinController {
 	
-	//Ola
-	int x = 1;
-	int frango = 13;
-	//Alo
+	public void compactarArquivo(Object objeto){
+		
+	}
+	
+	public void descompactarArquivo(Object objeto){
+		
+	}
+	
+	public void verificarIntegridade(){
+		
+	}
+	
+	
 }
