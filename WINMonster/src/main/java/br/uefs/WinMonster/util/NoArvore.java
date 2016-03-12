@@ -1,7 +1,7 @@
 package br.uefs.WinMonster.util;
 
-public class NoArvore {
-//s
+public class NoArvore implements Comparable<NoArvore>{
+
 	char letra;
 	int frequencia;
 	NoArvore filhoEsq;
@@ -30,5 +30,14 @@ public class NoArvore {
 	}
 	public void setFilhoDir(Object object) {
 		this.filhoDir = (NoArvore) object;
+	}
+	
+	@Override
+	public int compareTo(NoArvore o) {
+		if( this.frequencia < o.frequencia)
+			return -1;
+		else if( this.frequencia > o.frequencia)
+			return 1;
+		return 0;
 	}
 }
