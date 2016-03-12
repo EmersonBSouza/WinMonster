@@ -3,26 +3,55 @@ package br.uefs.WinMonster.util;
 public class Fila implements IFila{
 
 	//Celula primeiro;
-	private Lista objeto = new Lista();
+	private Lista lista = new Lista();
 	
 	@Override
 	public int obterTamanho(){
-		return objeto.obterTamanho();
+		return lista.obterTamanho();
+	}
+	public void inserirComPrioridade(Object novoObjeto) {
+		Celula atual;
+		Celula anterior;
+		
+		if(lista.estaVazia()) {
+			Celula nova = new Celula();
+			lista.primeiro = nova;
+		}
+		else {
+			atual = lista.primeiro;
+			anterior = lista.primeiro;
+
+			while(atual != null){
+				if( ((Comparable) novoObjeto).compareTo(atual.getObjeto()) > 0) {
+					anterior = atual;
+					atual = atual.getProximo();
+				}
+				if(atual.getObjeto() == lista.primeiro.getObjeto())
+					lista.inserirInicio(novoObjeto);
+				else {
+					Celula nova = new Celula();
+					nova.setObjeto(novoObjeto);
+					nova.setProximo(anterior.getProximo());
+					anterior.setProximo(nova);
+				}
+					
+			}
+		}	
 	}
 
 	@Override
 	public void inserirFinal(Object o) {
-		this.objeto.inserirFinal(o);
+		this.lista.inserirFinal(o);
 	}
 
 	@Override
 	public Object removerInicio() {	
-		return (Celula)objeto.removerInicio();
+		return (Celula)lista.removerInicio();
 	}
 
 	@Override
 	public Celula recuperarInicio() {
-		return objeto.primeiro;
+		return lista.primeiro;
 		
 	}
 
@@ -34,6 +63,6 @@ public class Fila implements IFila{
 
 	@Override
 	public boolean estaVazia() {
-		return this.objeto.estaVazia();
+		return this.lista.estaVazia();
 	}
 }
