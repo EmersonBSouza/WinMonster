@@ -6,7 +6,7 @@ public class Fila implements IFila{
 	private Lista objeto = new Lista();
 	
 	@Override
-	public int obterTamanho() {
+	public int obterTamanho(){
 		return objeto.obterTamanho();
 	}
 
