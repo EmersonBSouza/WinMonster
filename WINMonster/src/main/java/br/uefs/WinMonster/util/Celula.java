@@ -4,6 +4,8 @@ public class Celula{
 
 		private Object objeto;
 		private Celula proximo;
+		
+		//private getCassio();
 
 		/**
 		 * Recupera um objeto
