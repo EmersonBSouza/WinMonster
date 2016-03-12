@@ -1,7 +1,7 @@
 package br.uefs.WinMonster.util;
 
 public class NoArvore {
-
+//s
 	char letra;
 	int frequencia;
 	NoArvore filhoEsq;
