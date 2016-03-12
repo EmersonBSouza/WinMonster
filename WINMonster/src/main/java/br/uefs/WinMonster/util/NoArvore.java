@@ -22,13 +22,13 @@ public class NoArvore {
 	public NoArvore getFilhoEsq() {
 		return filhoEsq;
 	}
-	public void setFilhoEsq(NoArvore filhoEsq) {
-		this.filhoEsq = filhoEsq;
+	public void setFilhoEsq(Object filhoEsq) {
+		this.filhoEsq = (NoArvore) filhoEsq;
 	}
 	public NoArvore getFilhoDir() {
 		return filhoDir;
 	}
-	public void setFilhoDir(NoArvore filhoDir) {
-		this.filhoDir = filhoDir;
+	public void setFilhoDir(Object object) {
+		this.filhoDir = (NoArvore) object;
 	}
 }

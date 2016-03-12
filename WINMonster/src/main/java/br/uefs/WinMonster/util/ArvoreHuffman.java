@@ -4,18 +4,32 @@ public class ArvoreHuffman {
 
 	
 	Fila arvores = new Fila();
-	NoArvore no;
+	private NoArvore raiz;
 	
 	public ArvoreHuffman criaArvore(Fila fila){
+		//Se houver apenas um elemento na fila, não entrará na condição e será retornada a árvore com o objeto
+		ArvoreHuffman arvoreFinal = (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 		
 		if(fila.obterTamanho()> 1){
 			
-			fila.removerInicio();
+			NoArvore no = new NoArvore();
+			no.setFilhoEsq(fila.removerInicio());
+			no.setFilhoDir(fila.removerInicio());
+			no.setFrequencia(no.getFilhoDir().getFrequencia()+ no.getFilhoEsq().getFrequencia());
 			
-			no = new NoArvore();
-			
+			arvores.inserirComPrioridade(no);
+			arvoreFinal = (ArvoreHuffman)criaArvore(fila);
 			
 		}
-		return null;
-	} 
+		
+		return arvoreFinal;
+	}
+	
+	public void codificarMensagem(ArvoreHuffman arvore){
+		if(arvore!=null){
+			codificarMensagem(arvore.getFilhoEsq);
+			//Manipulação
+			codificarMensagem(arvore.getFilhoDir());
+		}
+	}
 }
