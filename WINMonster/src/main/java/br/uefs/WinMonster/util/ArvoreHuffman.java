@@ -6,25 +6,25 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 	private NoArvore raiz;
 	
 	public ArvoreHuffman criaArvore(Fila fila){
-		//Se houver apenas um elemento na fila, não entrará na condição e será retornada a árvore com o objeto
-		ArvoreHuffman arvoreFinal = (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 		
-		if(fila.obterTamanho()> 1) {
+		if(fila.obterTamanho() > 1) {
 			
 			NoArvore novoNo = new NoArvore();
 			NoArvore filhoEsq =((ArvoreHuffman) fila.removerInicio()).getRaiz();
 			NoArvore filhoDir =((ArvoreHuffman) fila.removerInicio()).getRaiz();
-			novoNo.setFilhoEsq(filhoDir);
-			novoNo.setFilhoDir(filhoEsq);
-			novoNo.setFrequencia(novoNo.getFilhoDir().getFrequencia()+ novoNo.getFilhoEsq().getFrequencia());
+			ArvoreHuffman novaArvore = new ArvoreHuffman();
 			
-			fila.inserirComPrioridade(novoNo);
-			criaArvore(fila);
-			raiz = (NoArvore)fila.recuperarInicio().getObjeto();
+			novoNo.setFilhoEsq(filhoEsq);
+			novoNo.setFilhoDir(filhoDir);
+			novoNo.setFrequencia(filhoDir.getFrequencia()+ filhoEsq.getFrequencia());
 			
+			novaArvore.setRaiz(novoNo);
+			
+			fila.inserirComPrioridade(novaArvore);
+			criaArvore(fila);	
 		}
 		
-		return arvoreFinal;
+		return (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 	}
 	
 	public void codificarMensagem(NoArvore No){
