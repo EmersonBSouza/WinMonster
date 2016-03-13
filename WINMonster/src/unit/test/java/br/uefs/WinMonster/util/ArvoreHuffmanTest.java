@@ -90,10 +90,10 @@ public class ArvoreHuffmanTest {
 
 		/* Percorre a árvore utilizando a codificacao, onde 0 significa esquerda e 1 direita*/
 		NoArvore atual = arvoreFinal.getRaiz();
+		char direcao;
+		int posicaoAtual = 0;
 		for(int i = 0; atual!= null; i++) {
 			
-			char direcao;
-			int posicaoAtual = 0;
 			direcao = vetorCodificacao[i];
 			
 			if(direcao == '0')
