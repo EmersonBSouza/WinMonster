@@ -38,30 +38,30 @@ public class Fila implements IFila{
 	}	
 
 
-@Override
-public void inserirFinal(Object o) {
-	this.lista.inserirFinal(o);
-}
+	@Override
+	public void inserirFinal(Object o) {
+		this.lista.inserirFinal(o);
+	}
 
-@Override
-public Celula removerInicio() {	
-	return (Celula)lista.removerInicio();
-}
+	@Override
+	public Celula removerInicio() {	
+		return (Celula)lista.removerInicio();
+	}
 
-@Override
-public Celula recuperarInicio() {
-	return lista.primeiro;
+	@Override
+	public Celula recuperarInicio() {
+		return lista.primeiro;
 
-}
+	}
 
-@Override
-public Iterador iterador() {
-	MIterador iterador= new MIterador(recuperarInicio());
-	return iterador;
-}
+	@Override
+	public Iterador iterador() {
+		MIterador iterador= new MIterador(recuperarInicio());
+		return iterador;
+	}
 
-@Override
-public boolean estaVazia() {
-	return this.lista.estaVazia();
-}
+	@Override
+	public boolean estaVazia() {
+		return this.lista.estaVazia();
+	}
 }

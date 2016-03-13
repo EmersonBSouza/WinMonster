@@ -82,8 +82,9 @@ public class Lista implements ILista{
 	 * */
 	@Override
 	public Object removerInicio() {
+		Celula aux = primeiro;
 		primeiro = primeiro.getProximo();
-		return primeiro;
+		return aux;
 	}
 	/**
 	 *Este método guarda o último elemento removido do inicio
