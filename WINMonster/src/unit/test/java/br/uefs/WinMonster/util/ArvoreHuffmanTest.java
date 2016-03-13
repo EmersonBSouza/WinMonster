@@ -14,7 +14,7 @@ public class ArvoreHuffmanTest {
 		
 		/* Os nós criados são inseridos na ordem que se espera que eles estejam
 		   localizados em uma árvore de HuffMan em uma leitura da esquerda para direita	*/
-		NoArvore[] vetorAux = new NoArvore[10];
+		NoArvore[] vetorAux = new NoArvore[9];
 
 		NoArvore no1 = new NoArvore();
 		no1.setLetra(' ');
@@ -22,43 +22,43 @@ public class ArvoreHuffmanTest {
 		vetorAux[0] = no1;
 
 		NoArvore no2 = new NoArvore();
-		no1.setLetra('A');
-		no1.setFrequencia(2);
+		no2.setLetra('A');
+		no2.setFrequencia(2);
 		vetorAux[1] = no2;
 
 		NoArvore no3 = new NoArvore();
-		no1.setLetra('T');
-		no1.setFrequencia(1);
+		no3.setLetra('T');
+		no3.setFrequencia(1);
 		vetorAux[2] = no3;
 
 		NoArvore no4 = new NoArvore();
-		no1.setLetra('\n');
-		no1.setFrequencia(1);
+		no4.setLetra('\n');
+		no4.setFrequencia(1);
 		vetorAux[3] = no4;
 
 		NoArvore no5 = new NoArvore();
-		no1.setLetra('U');
-		no1.setFrequencia(1);
+		no5.setLetra('U');
+		no5.setFrequencia(1);
 		vetorAux[4] = no5;
 
 		NoArvore no6 = new NoArvore();
-		no1.setLetra('S');
-		no1.setFrequencia(6);
+		no6.setLetra('S');
+		no6.setFrequencia(6);
 		vetorAux[5] = no6;
 
 		NoArvore no7 = new NoArvore();
-		no1.setLetra('I');
-		no1.setFrequencia(3);
+		no7.setLetra('I');
+		no7.setFrequencia(3);
 		vetorAux[6] = no7;
 
 		NoArvore no8 = new NoArvore();
-		no1.setLetra('Y');
-		no1.setFrequencia(2);
+		no8.setLetra('Y');
+		no8.setFrequencia(2);
 		vetorAux[7] = no8;
 
 		NoArvore no9 = new NoArvore();
-		no1.setLetra('E');
-		no1.setFrequencia(2);
+		no9.setLetra('E');
+		no9.setFrequencia(2);
 		vetorAux[8] = no9;
 		
 		//Cria fila com os caracteres de menor frequência com preferência
