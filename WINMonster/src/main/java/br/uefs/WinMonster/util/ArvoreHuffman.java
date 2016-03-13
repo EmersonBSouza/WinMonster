@@ -10,8 +10,8 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		if(fila.obterTamanho() > 1) {
 			
 			NoArvore novoNo = new NoArvore();
-			ArvoreHuffman arvore1 = (ArvoreHuffman) fila.removerInicio();
-			ArvoreHuffman arvore2 = (ArvoreHuffman) fila.removerInicio();
+			ArvoreHuffman arvore1 = (ArvoreHuffman) fila.removerInicio().getObjeto();
+			ArvoreHuffman arvore2 = (ArvoreHuffman) fila.removerInicio().getObjeto();
 			NoArvore filhoEsq = arvore1.raiz;
 			NoArvore filhoDir = arvore2.raiz;
 			novoNo.setFilhoEsq(filhoEsq);

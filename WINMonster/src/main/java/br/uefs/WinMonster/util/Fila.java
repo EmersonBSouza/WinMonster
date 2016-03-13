@@ -44,7 +44,7 @@ public void inserirFinal(Object o) {
 }
 
 @Override
-public Object removerInicio() {	
+public Celula removerInicio() {	
 	return (Celula)lista.removerInicio();
 }
 
