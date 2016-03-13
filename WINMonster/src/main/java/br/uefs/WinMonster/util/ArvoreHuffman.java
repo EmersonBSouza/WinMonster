@@ -2,7 +2,7 @@ package br.uefs.WinMonster.util;
 
 public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 
-	
+	//Eclipse é bugado
 	private NoArvore raiz;
 	
 	public ArvoreHuffman criaArvore(Fila fila){
