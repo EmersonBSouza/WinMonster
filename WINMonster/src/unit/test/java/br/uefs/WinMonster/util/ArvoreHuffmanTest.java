@@ -61,13 +61,16 @@ public class ArvoreHuffmanTest {
 		no9.setFrequencia(2);
 		vetorAux[8] = no9;
 		
-		//Cria fila com os caracteres de menor frequência com preferência
-		for(int i=0;i<vetorAux.length;i++)
-			fila.inserirComPrioridade(vetorAux[i]);
+		/*Cria um objeto árvore para cada um dos nós, tendo eles como raiz, os caracteres de 
+		  menor frequência possuem preferência */
+		for(int i=0;i<vetorAux.length;i++) {
+			ArvoreHuffman arvore = new ArvoreHuffman();
+			arvore.setRaiz(vetorAux[i]);
+			fila.inserirComPrioridade(arvore);
+		}
 		
-		//Cria árvore de Huffmann 
-		ArvoreHuffman arvore = new ArvoreHuffman();
-		arvore = arvore.criaArvore(fila);
+		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
+		arvoreFinal = arvoreFinal.criaArvore(fila);
 
 		/*Código esperado que seja gerado por uma árvore de HuffMan para a String em questão
 		 * lida da esquerda para direita*/
@@ -86,7 +89,7 @@ public class ArvoreHuffmanTest {
 		char[] vetorObtido = new char[9];
 
 		/* Percorre a árvore utilizando a codificacao, onde 0 significa esquerda e 1 direita*/
-		NoArvore atual = arvore.getRaiz();
+		NoArvore atual = arvoreFinal.getRaiz();
 		for(int i = 0; atual!= null; i++) {
 			
 			char direcao;
@@ -104,7 +107,7 @@ public class ArvoreHuffmanTest {
 			if (atual.getLetra() != '\0') {
 				vetorObtido[posicaoAtual] = atual.getLetra();
 				posicaoAtual++;
-				atual = arvore.getRaiz();
+				atual = arvoreFinal.getRaiz();
 			}
 		}
 		
