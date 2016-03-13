@@ -33,4 +33,8 @@ public class ArvoreHuffman {
 			codificarMensagem(raiz.getFilhoDir());
 		}
 	}
+
+	public NoArvore getRaiz() {
+		return this.raiz;
+	}
 }
