@@ -22,7 +22,7 @@ public class Fila implements IFila{
 		else {
 			atual = lista.primeiro;
 			anterior = lista.primeiro;
-			while(atual != null && ((Comparable) novoObjeto).compareTo(atual.getObjeto()) >= 0) {
+			while(atual != null && ((Comparable) novoObjeto).compareTo(atual.getObjeto()) > 0) {
 				anterior = atual;
 				atual = atual.getProximo();
 			}

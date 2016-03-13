@@ -63,7 +63,7 @@ public class ArvoreHuffmanTest {
 
 		/*Cria um objeto árvore para cada um dos nós, tendo eles como raiz, os caracteres de 
 		  menor frequência possuem preferência */
-		for(int i=8;i>=0;i--) {
+		for(int i=0;i<vetorAux.length;i++) {
 			ArvoreHuffman arvore = new ArvoreHuffman();
 			arvore.setRaiz(vetorAux[i]);
 			fila.inserirFinal(arvore);;
@@ -90,7 +90,6 @@ public class ArvoreHuffmanTest {
 		char[] vetorObtido = new char[9];
 
 		/* Percorre a árvore utilizando a codificacao, onde 0 significa esquerda e 1 direita*/
-
 		char direcao;
 		int i = 0;
 
@@ -113,12 +112,9 @@ public class ArvoreHuffmanTest {
 			} 
 		} while( posicaoNoVetorObtido < vetorObtido.length);
 		
-
-
-
 		/* Depois de percorrer a árvore com o código e salvar as letras encontradas na ordem
 		 * em um vetor, verificamos se temos a sequência esperada*/
-		for(i = 0; i < codificacao.length(); i++)
+		for(i = 0; i < vetorAux.length; i++)
 			assertEquals(vetorAux[i].getLetra(), vetorObtido[i]);
 
 	}
