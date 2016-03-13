@@ -1,6 +1,6 @@
 package br.uefs.WinMonster.util;
 
-public class ArvoreHuffman {
+public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 
 	
 	Fila arvores = new Fila();
@@ -36,5 +36,18 @@ public class ArvoreHuffman {
 
 	public NoArvore getRaiz() {
 		return this.raiz;
+	}
+	
+	public void setRaiz(NoArvore raiz) {
+		this.raiz = raiz;
+	}
+
+	@Override
+	public int compareTo(ArvoreHuffman arvore2) {
+		if( this.getRaiz().frequencia < arvore2.getRaiz().frequencia)
+			return -1;
+		else if( this.getRaiz().frequencia > arvore2.getRaiz().frequencia)
+			return 1;
+		return 0;
 	}
 }
