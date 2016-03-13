@@ -3,23 +3,24 @@ package br.uefs.WinMonster.util;
 public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 
 	
-	Fila arvores = new Fila();
 	private NoArvore raiz;
 	
 	public ArvoreHuffman criaArvore(Fila fila){
 		//Se houver apenas um elemento na fila, não entrará na condição e será retornada a árvore com o objeto
 		ArvoreHuffman arvoreFinal = (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 		
-		if(fila.obterTamanho()> 1){
+		if(fila.obterTamanho()> 1) {
 			
-			NoArvore no = new NoArvore();
-			no.setFilhoEsq(fila.removerInicio());
-			no.setFilhoDir(fila.removerInicio());
-			no.setFrequencia(no.getFilhoDir().getFrequencia()+ no.getFilhoEsq().getFrequencia());
+			NoArvore novoNo = new NoArvore();
+			NoArvore filhoEsq =((ArvoreHuffman) fila.removerInicio()).getRaiz();
+			NoArvore filhoDir =((ArvoreHuffman) fila.removerInicio()).getRaiz();
+			novoNo.setFilhoEsq(filhoDir);
+			novoNo.setFilhoDir(filhoEsq);
+			novoNo.setFrequencia(novoNo.getFilhoDir().getFrequencia()+ novoNo.getFilhoEsq().getFrequencia());
 			
-			arvores.inserirComPrioridade(no);
+			fila.inserirComPrioridade(novoNo);
 			criaArvore(fila);
-			raiz = (NoArvore)arvores.recuperarInicio().getObjeto();
+			raiz = (NoArvore)fila.recuperarInicio().getObjeto();
 			
 		}
 		
