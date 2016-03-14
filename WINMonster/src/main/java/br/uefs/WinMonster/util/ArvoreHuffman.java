@@ -30,12 +30,30 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		return (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 	}
 	
-	public void codificarMensagem(NoArvore No){
-		if(raiz!=null){
-			codificarMensagem(raiz.getFilhoEsq());
-			//Manipulação
-			codificarMensagem(raiz.getFilhoDir());
+	public String codificarMensagem(NoArvore No,StringBuffer construtorCodigo,char original){
+		
+		if(raiz.getFilhoDir()== null && raiz.getFilhoEsq()== null){//Se o nó for uma folha, este contém a letra a ser codificada
+			if(raiz.getLetra()== original){//Se a letra for igual à letra desejada, a string final é retornada 
+				return construtorCodigo.toString();//Isso só irá acontecer ao final das chamadas recursivas
+			}
+		}else{
+			
+			//Percorre a esquerda da árvore
+			construtorCodigo.append('0');//Concatena "0" à string que está sendo construída, representando que o elemento está à esquerda
+			String esquerda = codificarMensagem(raiz.getFilhoEsq(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
+			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
+			
+			//Percorre a direita da árvore
+			construtorCodigo.append('1');//Concatena "1" à string que está sendo construída, representando que o elemento está à direita
+			String direita = codificarMensagem(raiz.getFilhoDir(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
+			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
+			
+			if(esquerda == null)
+				return direita;
+			else
+				return esquerda;
 		}
+		return null;
 	}
 
 	public NoArvore getRaiz() {
@@ -45,7 +63,7 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 	public void setRaiz(NoArvore raiz) {
 		this.raiz = raiz;
 	}
-
+	
 	@Override
 	public int compareTo(ArvoreHuffman arvore2) {
 		if( this.getRaiz().frequencia < arvore2.getRaiz().frequencia)
