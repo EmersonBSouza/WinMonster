@@ -30,7 +30,7 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		return (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 	}
 	
-	public String codificarMensagem(NoArvore No,StringBuffer construtorCodigo,char original){
+	public String codificarCaractere(NoArvore No,StringBuffer construtorCodigo,char original){
 		
 		if(No.getFilhoDir()== null && No.getFilhoEsq()== null){//Se o nó for uma folha, este contém a letra a ser codificada
 			if(No.getLetra()== original){//Se a letra for igual à letra desejada, a string final é retornada 
@@ -40,12 +40,12 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 			
 			//Percorre a esquerda da árvore
 			construtorCodigo.append('0');//Concatena "0" à string que está sendo construída, representando que o elemento está à esquerda
-			String esquerda = codificarMensagem(No.getFilhoEsq(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
+			String esquerda = codificarCaractere(No.getFilhoEsq(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
 			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
 			
 			//Percorre a direita da árvore
 			construtorCodigo.append('1');//Concatena "1" à string que está sendo construída, representando que o elemento está à direita
-			String direita = codificarMensagem(No.getFilhoDir(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
+			String direita = codificarCaractere(No.getFilhoDir(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
 			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
 			
 			if(esquerda == null)
@@ -55,7 +55,22 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		}
 		return null;
 	}
-
+	public char decodificarCaractere(NoArvore No,String codigo,int index){
+		
+		//Se o nó for uma folha, retorna a letra desejada
+		if(No.getFilhoEsq()==null && No.getFilhoDir()==null){
+			return No.getLetra();
+		}
+		else{
+			if(codigo.charAt(index)=='0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
+				decodificarCaractere(No.getFilhoEsq(),codigo,index++);
+			}
+			else if(codigo.charAt(index)=='1'){//Se o caractere atual da String for 1, o deslocamento na árvore é feito para a direita
+				decodificarCaractere(No.getFilhoDir(),codigo,index++);
+			}
+		}
+		return '\0';
+	}
 	public NoArvore getRaiz() {
 		return this.raiz;
 	}
