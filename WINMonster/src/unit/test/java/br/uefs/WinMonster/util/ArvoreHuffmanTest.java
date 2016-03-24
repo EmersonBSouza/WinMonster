@@ -135,9 +135,33 @@ public class ArvoreHuffmanTest {
 		arvoreFinal = arvoreFinal.criaArvore(fila);
 		arvoreFinal.setDicionario(new String[quantidadeDeCaracteres][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
-		String [][] teste = arvoreFinal.getDicionario();
-		teste.toString();
-		assertEquals(0,0);
+		
+		String codificacao = "00" //Barra de espaço
+				+ "010" //A
+				+ "0110" //T
+				+"01110" //\n 
+				+ "01111" //U
+				+ "10" //S	
+				+ "110" //I
+				+ "1110" //Y
+				+ "1111"; //E
+		String [][] teste = arvoreFinal.getDicionario();//Recebe o dicionário
+		String textoObtido = "";//Cria uma string para receber a sequência contida no dicionário;
+		
+		for(int i = 0;i < teste.length;i++){//Percorre o array do dicionário
+			textoObtido += teste[i][1];//Concatena os códigos recebidos
+		}
+		
+		assertEquals(codificacao,textoObtido);
+		
+		String gabarito = " AT\nUSIYE";
+		String caracteresObtidos = "";
+		
+		for(int i = 0;i < teste.length;i++){//Percorre o array do dicionário
+			caracteresObtidos += teste[i][0];//Concatena os caracteres recebidos
+		}
+		
+		assertEquals(gabarito,caracteresObtidos);
 	}
 	
 }
