@@ -7,49 +7,76 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 	private NoArvore raiz;
 	private String [][] dicionario;
 
+	/**
+	 * Cria uma árvore de Huffman
+	 * @param fila
+	 * @return novaArvoreDeHuffman
+	 */
 	public ArvoreHuffman criaArvore(Fila fila){
 
+		/*Enquanto houver mais de um elemento na fila */
 		if(fila.obterTamanho() > 1) {
 
-			NoArvore novoNo = new NoArvore();
+			/* remove as duas primeiras árvores da fila e salva suas raízes em nós */
 			ArvoreHuffman arvore1 = (ArvoreHuffman) fila.removerInicio().getObjeto();
 			ArvoreHuffman arvore2 = (ArvoreHuffman) fila.removerInicio().getObjeto();
 			NoArvore filhoEsq = arvore1.raiz;
 			NoArvore filhoDir = arvore2.raiz;
+			
+			/* cria-se um nó pai que possui os dois nós removidos como filhos */
+			NoArvore novoNo = new NoArvore();
 			novoNo.setFilhoEsq(filhoEsq);
 			novoNo.setFilhoDir(filhoDir);
-
-			ArvoreHuffman novaArvore = new ArvoreHuffman();
-
+			
+			/* O nó pai possui frequência igual a soma das frequências dos nós filhos */
 			novoNo.setFrequencia(filhoDir.getFrequencia()+ filhoEsq.getFrequencia());
-
+			
+			/* Cria-se uma árvore com esse novo nó*/
+			ArvoreHuffman novaArvore = new ArvoreHuffman();
 			novaArvore.setRaiz(novoNo);
-
+			
+			/*Adiciona a árvore a fila e chama o método novamente, que dessa vez possui um
+			 * elemento a menos na fila*/
 			fila.inserirComPrioridade(novaArvore);
 			criaArvore(fila);	
 		}
-
+		/*Quando houver apenas uma árvore na fila, ela é a árvore de Huffman completa*/
 		return (ArvoreHuffman)fila.recuperarInicio().getObjeto();
 	}
-
+	
+	/**
+	 * -Recursivo- Encontra os caracteres e seus respectivos códigos e cria o dicionário da árvore
+	 * @param noAtual
+	 * @param construtorCodigo
+	 */
 	public void criarDicionario(NoArvore noAtual, StringBuffer construtorCodigo) {
 		if(noAtual != null) {
+			/*Anda para a direita da árvore, adicionando 0 ao código*/
 			construtorCodigo.append('0');
 			criarDicionario(noAtual.filhoEsq,construtorCodigo);
+			/*Caso seja encontrado uma folha, que possui um caractere, ela é adicionada a árvore*/
 			if(noAtual.getFilhoDir()== null && noAtual.getFilhoEsq()== null) {
 				adicionarLetraAoDicionario(noAtual.getLetra(), construtorCodigo.toString());
 				construtorCodigo.deleteCharAt(construtorCodigo.length()-1);
 				return;
 			}
+			/*Anda para a esquerda da árvore, adicionando 1 ao código*/
 			construtorCodigo.append('1');
 			criarDicionario(noAtual.filhoDir,construtorCodigo);
 		}
+		/*Caso seja encontrado um No nulo, remove-se um caractere do código*/
 		if(construtorCodigo.length() > 0)
 			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);
 	}
-
+	
+	/**
+	 * Adiciona um caractere com seu respectivo código ao dicionário da árvore
+	 * @param letra
+	 * @param codigo
+	 */
 	public void adicionarLetraAoDicionario(char letra, String codigo) {
 		int posicaoAtual = 0;
+		/*Percorre o dicionário procurando um lugar vazio para inserir a nova letra e seu código*/
 		while(dicionario[posicaoAtual][0] != null && posicaoAtual < dicionario.length)
 			posicaoAtual++;
 		dicionario[posicaoAtual][0] = Character.toString(letra);
@@ -111,22 +138,39 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 
 		return decodificacao;//Retorna a String concluída
 	}
+	
+	/**
+	 * Retorna a raiz da árvore
+	 * @return
+	 */
 	public NoArvore getRaiz() {
 		return this.raiz;
 	}
-
+	
+	/**
+	 * Atribui uma nova raiz a árvore
+	 * @param raiz
+	 */
 	public void setRaiz(NoArvore raiz) {
 		this.raiz = raiz;
 	}
-
+	
+	/**
+	 * Retorna o dicionário da árvore
+	 * @return
+	 */
 	public String[][] getDicionario() {
 		return this.dicionario;
 	}
 
+	/**
+	 * Atribui um novo dicionário a árvore
+	 * @param raiz
+	 */
 	public void setDicionario(String [][] dicionario) {
 		this.dicionario = dicionario;
 	}
-
+	
 	@Override
 	public int compareTo(ArvoreHuffman arvore2) {
 		if( this.getRaiz().frequencia < arvore2.getRaiz().frequencia)
