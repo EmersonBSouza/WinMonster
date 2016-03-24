@@ -90,9 +90,37 @@ public class ArvoreHuffmanTest {
 		
 		String textoCodificado ="";//Uma String vazia é criada
 		for(char original:teste.toCharArray()){//A string é percorrida
-			textoCodificado += arvoreFinal.codificarMensagem(arvoreFinal.getRaiz(), new StringBuffer(), original);//Chama o método de codificação
+			textoCodificado += arvoreFinal.codificarCaractere(arvoreFinal.getRaiz(), new StringBuffer(), original);//Chama o método de codificação
 		}
 		
 		assertEquals(textoCodificado,codificacao);
+	}
+	@Test
+	public void testDecodificarTexto(){
+		
+		Fila fila = CriarObjetos.criarFila();
+		NoArvore[] vetorAux = CriarObjetos.criarVetor();
+		
+		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
+		arvoreFinal = arvoreFinal.criaArvore(fila);
+		
+		String codificacao = "00" //Barra de espaço
+				+ "010" //A
+				+ "0110" //T
+				+"01110" //\n 
+				+ "01111" //U
+				+ "10" //S	
+				+ "110" //I
+				+ "1110" //Y
+				+ "1111"; //E
+		
+		String obtida;
+		
+		obtida = arvoreFinal.decodificarCaractere(arvoreFinal.getRaiz(), codificacao);
+		
+		String gabarito = " AT\nUSIYE";
+		
+		assertEquals(gabarito,obtida);
+		
 	}
 }

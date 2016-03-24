@@ -55,21 +55,34 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		}
 		return null;
 	}
-	public char decodificarCaractere(NoArvore No,String codigo,int index){
+	public String decodificarCaractere(NoArvore No,String codigo){
+		String decodificacao = "";
+		NoArvore raiz = No;
 		
-		//Se o nó for uma folha, retorna a letra desejada
-		if(No.getFilhoEsq()==null && No.getFilhoDir()==null){
-			return No.getLetra();
-		}
-		else{
-			if(codigo.charAt(index)=='0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
-				decodificarCaractere(No.getFilhoEsq(),codigo,index++);
+		for(char index :codigo.toCharArray()){
+			
+			if(index=='0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
+				if(No.getFilhoEsq().getFilhoEsq()== null){//Verifica se é um nó do tipo folha
+					decodificacao += No.getFilhoEsq().getLetra();//Se for uma folha, o valor da letra é obtido e guardado na String de decodificação
+					No = raiz;//Retorna para a raiz da árvore
+				}
+			
+				else{ 
+					No = No.getFilhoEsq();//Movimenta para a esquerda da árvore
+				}
 			}
-			else if(codigo.charAt(index)=='1'){//Se o caractere atual da String for 1, o deslocamento na árvore é feito para a direita
-				decodificarCaractere(No.getFilhoDir(),codigo,index++);
-			}
+			else if(index == '1'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a direita
+				if(No.getFilhoDir().getFilhoDir()==null){//Verifica se é um nó do tipo folha
+					decodificacao += No.getFilhoDir().getLetra();//Se for uma folha, o valor da letra é obtido e guardado na String de decodificação
+					No = raiz;//Retorna para a raiz da árvore
+				}
+				else{
+					No=No.getFilhoDir();//Movimenta para a direita da árvore
+				}		
+			}			
 		}
-		return '\0';
+		
+		return decodificacao;//Retorna a String concluída
 	}
 	public NoArvore getRaiz() {
 		return this.raiz;
