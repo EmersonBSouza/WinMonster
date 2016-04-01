@@ -68,7 +68,7 @@ public class TelaPrincipal {
 				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","java");
 				escolhedor.setFileFilter(filtro);
 				escolhedor.showOpenDialog(saidas);
-				controller.compactarArquivo(escolhedor.getSelectedFile().getPath());
+				controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
 				saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
 			}
 

@@ -1,12 +1,14 @@
 package br.uefs.WinMonster.controller;
 
+import java.io.File;
+
 import br.uefs.WinMonster.util.*;
 
 public class WinController {
 	
-	public void compactarArquivo(String caminho){
+	public void compactarArquivo(String caminho,File arquivoOriginal){
 		Arquivo arquivo = new Arquivo();
-		String texto = arquivo.lerTexto(caminho);
+		String texto = arquivo.lerTexto(caminho,arquivoOriginal);
 		Lista caracteres = new Lista();
 		Fila fila = new Fila();
 		boolean existeLetra = false;
@@ -37,6 +39,18 @@ public class WinController {
 		arvoreFinal = arvoreFinal.criaArvore(fila);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
 		
+		StringBuffer textoCodificado = new StringBuffer();
+		String[][] dicionario = arvoreFinal.getDicionario();
+		
+		int posicaoAtual = 0;
+		for(int i=0;i < texto.length();i++){
+			while(texto.charAt(i) != dicionario[posicaoAtual][0].charAt(0)){
+				posicaoAtual++;
+			}
+			textoCodificado.append(dicionario[posicaoAtual][1]);
+		}
+		
+		arquivo.salvarTexto(textoCodificado.toString(), caminho);
 	}
 	
 	public void descompactarArquivo(Object objeto){

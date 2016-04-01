@@ -54,13 +54,11 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public String lerTexto(String path) {
-		
-		File arq = new File("arq.txt");//Rever isso aqui ainda
-		
+	public String lerTexto(String caminho, File arquivo) {
+				
 		try {
 			
-			FileReader leitura = new FileReader(arq);
+			FileReader leitura = new FileReader(arquivo);
 			BufferedReader leituraBuffer = new BufferedReader(leitura);
 			String buffer = leituraBuffer.readLine();
 			leituraBuffer.close();
@@ -78,10 +76,8 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public String lerBytes(String path) {
-		
-		File arquivo = new File("arquivo.txt");
-		
+	public String lerBytes(String caminho,File arquivo) {
+				
 		try {
 			FileInputStream ler = new FileInputStream(arquivo);
 			BufferedInputStream bufferLer = new BufferedInputStream(ler);
