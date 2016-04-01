@@ -17,15 +17,16 @@ public class RascunhoBits {
 public static void main(String[] args) throws IOException {
 		
 		
-		BitSet b = new BitSet(24);
+		BitSet b = new BitSet(16);
 		String n = //"10011111"
 					//+"01101111"
 					//+"00100101"
 					//+"11010001"
 					//+"10011010"
-					"00111101"
-					+"01011100"
-					+"11100010";
+					//"00111101"
+					//"01011100"
+					//+"1110010";
+					"0001000100010001";
 		//1011 significa 11
 		//1111 significa 15
 		//Vem false por padrão
@@ -70,7 +71,7 @@ public static void main(String[] args) throws IOException {
 		
 		StringBuffer numero = new StringBuffer();
 		
-		while(x<24){
+		while(x<16){
 			if(b.get(x)==true)
 				numero.append(1);
 			else
@@ -125,11 +126,9 @@ public static void main(String[] args) throws IOException {
 	  StringBuffer definitiva = new StringBuffer();
 	  int content;
       while( ( content = bufferLer.read() ) != -1){
-          if(true){
-        	  string.append(Integer.toBinaryString(content)).reverse();
-        	  definitiva.append(string.toString());
-        	  string = new StringBuffer();
-          }
+          string.append(Integer.toBinaryString(content)).reverse();
+       	  definitiva.append(string.toString());
+       	  string = new StringBuffer();
       }
 	  bufferLer.close();
 	  

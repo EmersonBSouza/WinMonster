@@ -53,7 +53,7 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		if(noAtual != null) {
 			/*Anda para a direita da árvore, adicionando 0 ao código*/
 			construtorCodigo.append('0');
-			criarDicionario(noAtual.filhoEsq,construtorCodigo);
+			criarDicionario(noAtual.getFilhoEsq(),construtorCodigo);
 			/*Caso seja encontrado uma folha, que possui um caractere, ela é adicionada a árvore*/
 			if(noAtual.getFilhoDir()== null && noAtual.getFilhoEsq()== null) {
 				adicionarLetraAoDicionario(noAtual.getLetra(), construtorCodigo.toString());
@@ -62,7 +62,7 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 			}
 			/*Anda para a esquerda da árvore, adicionando 1 ao código*/
 			construtorCodigo.append('1');
-			criarDicionario(noAtual.filhoDir,construtorCodigo);
+			criarDicionario(noAtual.getFilhoDir(),construtorCodigo);
 		}
 		/*Caso seja encontrado um No nulo, remove-se um caractere do código*/
 		if(construtorCodigo.length() > 0)
@@ -173,9 +173,9 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 	
 	@Override
 	public int compareTo(ArvoreHuffman arvore2) {
-		if( this.getRaiz().frequencia < arvore2.getRaiz().frequencia)
+		if( this.getRaiz().getFrequencia() < arvore2.getRaiz().getFrequencia())
 			return -1;
-		else if( this.getRaiz().frequencia > arvore2.getRaiz().frequencia)
+		else if( this.getRaiz().getFrequencia() > arvore2.getRaiz().getFrequencia())
 			return 1;
 		return 0;
 	}

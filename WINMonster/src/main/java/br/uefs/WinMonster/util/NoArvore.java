@@ -2,10 +2,10 @@ package br.uefs.WinMonster.util;
 
 public class NoArvore implements Comparable<NoArvore>{
 
-	char letra;
-	int frequencia;
-	NoArvore filhoEsq;
-	NoArvore filhoDir;
+	private char letra;
+	private int frequencia;
+	private NoArvore filhoEsq;
+	private NoArvore filhoDir;
 	
 	public char getLetra() {
 		return letra;

@@ -23,10 +23,12 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import br.uefs.WinMonster.controller.WinController;
+
 public class TelaPrincipal {
 	private JScrollPane barraRolagem;
 	private JTextArea saidas;
-
+	private WinController controller = new WinController();
 
 	private JMenuBar criarBarraMenu() {
 		JMenu menu = new JMenu("Arquivo");
@@ -47,7 +49,7 @@ public class TelaPrincipal {
 			}
 		});
 
-
+		saidas.setEditable(false);
 		JMenuBar barraMenu = new JMenuBar();
 		JMenuItem itemMenu;
 
@@ -63,9 +65,10 @@ public class TelaPrincipal {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser escolhedor = new JFileChooser();
-				FileNameExtensionFilter filtro = new FileNameExtensionFilter("WinMonster File", "wmn");
+				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","java");
 				escolhedor.setFileFilter(filtro);
 				escolhedor.showOpenDialog(saidas);
+				controller.compactarArquivo(escolhedor.getSelectedFile().getPath());
 				saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
 			}
 
@@ -82,6 +85,10 @@ public class TelaPrincipal {
 		itemMenu.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+				JFileChooser escolhedor = new JFileChooser();
+				FileNameExtensionFilter filtro = new FileNameExtensionFilter("WinMonster File", "wmn");
+				escolhedor.setFileFilter(filtro);
+				escolhedor.showOpenDialog(saidas);
 				saidas.setText(saidas.getText() + "Arquivo descompactado com sucesso! -ou não\n");
 			}
 
@@ -96,7 +103,7 @@ public class TelaPrincipal {
 		menu = new JMenu("Aparência");
 		//cria outro item para o menu
 		itemMenu = new JMenuItem();
-		itemMenu.setIcon(new ImageIcon(getClass().getResource("descompactar.png")));
+		//itemMenu.setIcon(new ImageIcon(getClass().getResource("descompactar.png")));
 		itemMenu.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {

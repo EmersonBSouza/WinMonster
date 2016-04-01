@@ -1,4 +1,4 @@
-package br.uefs.WinMonster.model.persistencia;
+package br.uefs.WinMonster.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
