@@ -58,7 +58,13 @@ public class WinController {
 	}
 	
 	public void verificarIntegridade(){
-		
+		/*String hash = null;
+		Integer hashParcial = 0;
+		int tamanhoDoTexto = caracteres.length;
+		for(int i=0;i<tamanhoDoTexto;i++)
+			hashParcial += (caracteres[i]*i)/(i+1);
+		hash = Integer.toString(hashParcial);
+		System.out.println(hash);*/
 	}
 	
 	
