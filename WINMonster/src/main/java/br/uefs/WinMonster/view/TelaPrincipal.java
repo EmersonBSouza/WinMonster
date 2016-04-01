@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
@@ -67,9 +68,13 @@ public class TelaPrincipal {
 				JFileChooser escolhedor = new JFileChooser();
 				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","java");
 				escolhedor.setFileFilter(filtro);
-				escolhedor.showOpenDialog(saidas);
-				controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
-				saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
+				int retorno = escolhedor.showOpenDialog(saidas);
+				if(retorno == escolhedor.APPROVE_OPTION){
+					controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
+					saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
+				}else{
+					JOptionPane.showMessageDialog(null, "Compactação Cancelada");
+				}
 			}
 
 		});

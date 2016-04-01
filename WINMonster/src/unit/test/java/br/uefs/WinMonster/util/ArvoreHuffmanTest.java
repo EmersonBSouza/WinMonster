@@ -43,9 +43,9 @@ public class ArvoreHuffmanTest {
 			if(atual.getLetra() == '\0') {
 				direcao = vetorCodificacao[i];
 				if(direcao == '0')
-					atual = atual.filhoEsq;
+					atual = atual.getFilhoEsq();
 				else if (direcao == '1')
-					atual = atual.filhoDir;
+					atual = atual.getFilhoDir();
 				i++;
 			}
 			/* Caso seja encontrada uma letra(folha), ela é salva em um vetor e voltamos ao 

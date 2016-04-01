@@ -1,7 +1,5 @@
 package br.uefs.WinMonster.util;
 
-import java.nio.IntBuffer;
-
 public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 
 	private NoArvore raiz;

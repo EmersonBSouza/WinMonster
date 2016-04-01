@@ -16,7 +16,7 @@ import java.util.BitSet;
 public class Arquivo implements Persistencia{
 
 	@Override
-	public void salvarBytes(String texto, String path) {
+	public void salvarBytes(String texto, File arquivoOriginal) {
 		
 		BitSet gravar = converterBits(texto);
 
@@ -36,11 +36,15 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public void salvarTexto(String texto, String path) {
+	public void salvarTexto(String texto, File arquivoOriginal) {
 		
-		File arq = new File("arq.txt");//Rever isso aqui ainda
+		File arquivo = new File("compactado.txt");//Rever isso aqui ainda
+		File dir = arquivoOriginal.getParentFile();
+		dir.mkdirs();
+		
 		try {
-			FileWriter escrita = new FileWriter(arq);
+			arquivo.createNewFile();
+			FileWriter escrita = new FileWriter(arquivo);
 			BufferedWriter escritaBuffer = new BufferedWriter(escrita);
 			
 			escritaBuffer.write(texto.toString());
@@ -63,6 +67,7 @@ public class Arquivo implements Persistencia{
 			String buffer = leituraBuffer.readLine();
 			leituraBuffer.close();
 			leitura.close();
+			return buffer;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
