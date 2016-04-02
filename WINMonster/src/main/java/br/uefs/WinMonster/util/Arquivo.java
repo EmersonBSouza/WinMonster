@@ -64,10 +64,15 @@ public class Arquivo implements Persistencia{
 			
 			FileReader leitura = new FileReader(arquivo);
 			BufferedReader leituraBuffer = new BufferedReader(leitura);
-			String buffer = leituraBuffer.readLine();
+			StringBuffer buffer = new StringBuffer();
+			int content = leituraBuffer.read();
+			while(content!=-1){
+				buffer.append((char)content);
+				content = leituraBuffer.read();
+			}
 			leituraBuffer.close();
 			leitura.close();
-			return buffer;
+			return buffer.toString();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
