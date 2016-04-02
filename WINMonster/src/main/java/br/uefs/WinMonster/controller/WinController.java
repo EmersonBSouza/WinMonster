@@ -5,7 +5,6 @@ import java.io.File;
 import br.uefs.WinMonster.util.*;
 
 public class WinController {
-	Lista caracteres = new Lista();
 	
 	public void compactarArquivo(String caminho,File arquivoOriginal){
 		Arquivo arquivo = new Arquivo();
@@ -13,10 +12,10 @@ public class WinController {
 		
 		Fila fila = new Fila();
 		boolean existeLetra = false;
-		ArvoreHuffman no;
+		ArvoreHuffman no = new ArvoreHuffman();
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		
-		for(int i=0; i < texto.length();i++){
+		/*for(int i=0; i < texto.length();i++){
 			existeLetra = false;
 			Iterador iterador = caracteres.iterador();
 			if(!caracteres.estaVazia()){
@@ -38,20 +37,29 @@ public class WinController {
 				novoNo.setRaiz(noRaiz);
 				caracteres.inserirFinal(novoNo);
 			}
-		}
+		}*/
 		
-		Iterador iterador = caracteres.iterador();
-		while(iterador.temProximo()){
-			no = (ArvoreHuffman)iterador.obterProximo();
-			fila.inserirComPrioridade(no);
-		}
+		  char[] caracteres = texto.toCharArray();
+		  int[] frequencias = new int[256];
+		  
+		  for(int i=0;i<caracteres.length;i++) {
+		   frequencias[caracteres[i]]++;
+		  }
+		  
+		  for(int i=0; i<texto.length();i++){
+			  if(frequencias[i]!=0){
+			  	  no.getRaiz().setLetra(caracteres[i]);//Aqui tem NULLPOINTER pq a raiz é igual a Null neste ponto
+			  	  no.getRaiz().setFrequencia(frequencias[i]);//Aqui tem NULLPOINTER pq a raiz é igual a Null neste ponto
+			  	  fila.inserirComPrioridade(no);
+			  }
+		  }
 		
 		int tamanho = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
 		arvoreFinal.setDicionario(new String[tamanho][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
 		
-		StringBuffer textoCodificado = new StringBuffer();
+		String textoCodificado = new String();
 		String[][] dicionario = arvoreFinal.getDicionario();
 		
 		
@@ -60,7 +68,7 @@ public class WinController {
 			while(texto.charAt(i) != dicionario[posicaoAtual][0].charAt(0)){
 				posicaoAtual++;
 			}
-			textoCodificado.append(dicionario[posicaoAtual][1]);
+			textoCodificado += dicionario[posicaoAtual][1];
 		}
 		
 		arquivo.salvarTexto(textoCodificado.toString(), arquivoOriginal);
