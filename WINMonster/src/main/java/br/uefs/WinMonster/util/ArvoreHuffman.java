@@ -75,10 +75,10 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 	public void adicionarLetraAoDicionario(char letra, String codigo) {
 		int posicaoAtual = 0;
 		/*Percorre o dicionário procurando um lugar vazio para inserir a nova letra e seu código*/
-		while(dicionario[posicaoAtual][0] != null && posicaoAtual < dicionario.length)
+		while(dicionario[(int)letra][0] != null && posicaoAtual < dicionario.length)
 			posicaoAtual++;
-		dicionario[posicaoAtual][0] = Character.toString(letra);
-		dicionario[posicaoAtual][1] = codigo;
+		dicionario[(int)letra][0] = Character.toString(letra);
+		dicionario[(int)letra][1] = codigo;
 	}
 	
 	/*public String codificarCaractere(NoArvore No,StringBuffer construtorCodigo,char original){

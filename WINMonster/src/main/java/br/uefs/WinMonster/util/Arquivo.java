@@ -43,8 +43,8 @@ public class Arquivo implements Persistencia{
 		dir.mkdirs();
 		
 		try {
-			arquivo.createNewFile();
-			FileWriter escrita = new FileWriter(arquivo);
+			
+			FileWriter escrita = new FileWriter(arquivo,true);
 			BufferedWriter escritaBuffer = new BufferedWriter(escrita);
 			
 			escritaBuffer.write(texto.toString());

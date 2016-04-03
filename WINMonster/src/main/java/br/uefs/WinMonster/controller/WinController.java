@@ -33,19 +33,24 @@ public class WinController {
 
 		int tamanho = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.setDicionario(new String[tamanho][2]);
+		arvoreFinal.setDicionario(new String[256][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
 
-		String textoCodificado = new String();
+		StringBuilder textoCodificado = new StringBuilder();
 		String[][] dicionario = arvoreFinal.getDicionario();
 
 		
 		for(int i=0;i < texto.length();i++){
-			int posicaoAtual = 0;
+			/*int posicaoAtual = 0;
 			while(texto.charAt(i) != dicionario[posicaoAtual][0].charAt(0)){
 				posicaoAtual++;
+			}*/
+			textoCodificado.append(dicionario[(int)texto.charAt(i)][1]);
+			if(textoCodificado.length() > 30000){
+				arquivo.salvarTexto(textoCodificado.toString(), arquivoOriginal);
+				textoCodificado.delete(0, textoCodificado.length());
 			}
-			textoCodificado += dicionario[posicaoAtual][1];
+			
 		}
 
 		arquivo.salvarTexto(textoCodificado.toString(), arquivoOriginal);
