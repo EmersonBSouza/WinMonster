@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.BitSet;
 
 public class Arquivo implements Persistencia{
@@ -18,21 +19,35 @@ public class Arquivo implements Persistencia{
 	@Override
 	public void salvarBytes(String texto, File arquivoOriginal) {
 		
-		BitSet gravar = converterBits(texto);
-
-		File arquivo = new File("arquivo.txt");//Rever isso
+		String nomeAnterior = arquivoOriginal.getName();
+		File arquivo = new File(nomeAnterior+" Compactado.txt");
+		File arquivo2 = new File("arquivo2");
+		BitSet conjuntoBits = new BitSet();
+		
+		for(int i = 0; i < texto.length();i++){
+			if(texto.charAt(i) == '1'){
+				conjuntoBits.set(i,true);
+			}
+			else{
+				conjuntoBits.set(i,false);
+			}
+		}
 		try{
-			FileOutputStream escrever = new FileOutputStream(arquivo);
+			FileOutputStream escrever = new FileOutputStream(arquivo,true);
+			FileWriter escreverTexto = new FileWriter(arquivo2,true);
 			
-			BufferedOutputStream bufferEscrever = new BufferedOutputStream(escrever);
-			bufferEscrever.write(gravar.toByteArray());
+			ObjectOutputStream bufferEscrever = new ObjectOutputStream(escrever);
+			BufferedWriter bufferEscrevertexto = new BufferedWriter(escreverTexto);
+
+			bufferEscrever.writeObject(conjuntoBits);
+			bufferEscrevertexto.write(texto.toString());
 			
+			bufferEscrevertexto.close();
 			bufferEscrever.close();
 			escrever.close();
 		}catch(IOException e){
 			
 		}
-		
 	}
 
 	@Override

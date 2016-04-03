@@ -1,7 +1,9 @@
 package br.uefs.WinMonster.controller;
 
 import java.io.File;
+import java.util.BitSet;
 
+import br.uefs.WinMonster.model.Compactador;
 import br.uefs.WinMonster.util.*;
 
 public class WinController {
@@ -38,22 +40,17 @@ public class WinController {
 
 		StringBuilder textoCodificado = new StringBuilder();
 		String[][] dicionario = arvoreFinal.getDicionario();
-
-		
+				
 		for(int i=0;i < texto.length();i++){
-			/*int posicaoAtual = 0;
-			while(texto.charAt(i) != dicionario[posicaoAtual][0].charAt(0)){
-				posicaoAtual++;
-			}*/
 			textoCodificado.append(dicionario[(int)texto.charAt(i)][1]);
-			if(textoCodificado.length() > 30000){
-				arquivo.salvarTexto(textoCodificado.toString(), arquivoOriginal);
-				textoCodificado.delete(0, textoCodificado.length());
-			}
 			
+			if(textoCodificado.length() > 30000){
+				arquivo.salvarBytes(textoCodificado.toString(), arquivoOriginal);
+				textoCodificado.delete(0, textoCodificado.length());
+			}	
 		}
-
-		arquivo.salvarTexto(textoCodificado.toString(), arquivoOriginal);
+		
+		arquivo.salvarBytes(textoCodificado.toString(), arquivoOriginal);
 	}
 
 	public void descompactarArquivo(Object objeto){
