@@ -71,7 +71,8 @@ public class TelaPrincipal {
 				int retorno = escolhedor.showOpenDialog(saidas);
 				if(retorno == escolhedor.APPROVE_OPTION){
 					controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
-					saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
+					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
+					JOptionPane.showMessageDialog(null, "Arquivo compactado com sucesso!");
 				}else{
 					JOptionPane.showMessageDialog(null, "Compactação Cancelada");
 				}
