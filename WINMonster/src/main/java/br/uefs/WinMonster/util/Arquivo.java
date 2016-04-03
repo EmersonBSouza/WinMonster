@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.BitSet;
 
@@ -101,23 +102,16 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public String lerBytes(String caminho,File arquivo) {
+	public BitSet lerBytes(File arquivo) {
 				
+		BitSet bitset = new BitSet();
 		try {
-			FileInputStream ler = new FileInputStream(arquivo);
-			BufferedInputStream bufferLer = new BufferedInputStream(ler);
-		    StringBuffer string = new StringBuffer(Integer.toBinaryString((int)bufferLer.read()));
-		    bufferLer.close();
-		    ler.close();
-		    return string.reverse().toString();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			bitset = (BitSet) new ObjectInputStream(new FileInputStream("arquivo.txt")).readObject();
+			
+		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return bitset;
 		
 	}
 
