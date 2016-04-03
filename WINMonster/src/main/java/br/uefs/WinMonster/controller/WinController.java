@@ -57,15 +57,32 @@ public class WinController {
 
 	}
 
-	public void verificarIntegridade(){
-		/*String hash = null;
+	public boolean verificarIntegridade(String x, String y) {
+		
+		char[] texto1 = x.toCharArray();
+		char[] texto2 = y.toCharArray();
+		
+		String hash1 = null;
+		String hash2 = null;
+		
 		Integer hashParcial = 0;
-		int tamanhoDoTexto = caracteres.length;
-		for(int i=0;i<tamanhoDoTexto;i++)
-			hashParcial += (caracteres[i]*i)/(i+1);
-		hash = Integer.toString(hashParcial);
-		System.out.println(hash);*/
+		
+		int tamanhoDoTexto1 = texto1.length;
+		int tamanhoDoTexto2 = texto2.length;
+		
+		if(tamanhoDoTexto1 != tamanhoDoTexto2)
+			return false;
+		
+		for(int i=0;i<tamanhoDoTexto1;i++)
+			hashParcial += (texto1[i]*i)/(i+1);
+		hash1 = Integer.toString(hashParcial);
+		
+		hashParcial = 0;
+		
+		for(int i=0;i<tamanhoDoTexto2;i++)
+			hashParcial += (texto2[i]*i)/(i+1);
+		hash2 = Integer.toString(hashParcial);
+		
+		return hash1.equals(hash2);
 	}
-
-
 }
