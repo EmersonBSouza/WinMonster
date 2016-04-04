@@ -64,65 +64,81 @@ public class ArvoreHuffmanTest {
 
 	}
 	
-	/*@Test
+	@Test
 	public void testCodificarMensagem(){
 		
 		Fila fila = CriarObjetos.criarFila();
-		NoArvore[] vetorAux = CriarObjetos.criarVetor();
-		
+				
 		//Cria-se uma árvore de Huffman com a fila gerada
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
+		arvoreFinal.setDicionario(new String[256][2]);
+		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(),new StringBuffer());
 
-		 Código esperado que seja gerado por uma árvore de HuffMan para a String em questão
-		 * em ordem crescente de frequência 
-		String codificacao = "00" //Barra de espaço
-				+ "010" //A
-				+ "0110" //T
-				+"01110" //\n 
-				+ "01111" //U
-				+ "10" //S	
-				+ "110" //I
-				+ "1110" //Y
-				+ "1111"; //E
-				
-		char[] vetorCodificacao = codificacao.toCharArray(); //Cria um vetor com essa String
-		String teste = " AT\nUSIYE";//A string para o teste é criada na ordem em que a travessia é feita na árvore
+		String textoOriginal = "SUSIE SAYS ITS EASY";
+		String codigoEsperado = "10" //S
+		+ "01111" //U
+		+ "10" //S
+		+ "110" //I
+		+ "1111" // E
+		+ "00" //espaço
+		+ "10" //S
+		+ "010" //A
+		+ "1110" //Y
+		+ "10" //S
+		+ "00" //espaço
+		+ "110" //I
+		+ "0110" //T
+		+ "10" //S
+		+ "00" //espaço
+		+ "1111" //E
+		+ "010" //A
+		+ "10" //S
+		+ "1110"; //Y
 		
-		String textoCodificado ="";//Uma String vazia é criada
-		for(char original:teste.toCharArray()){//A string é percorrida
-			textoCodificado += arvoreFinal.codificarCaractere(arvoreFinal.getRaiz(), new StringBuffer(), original);//Chama o método de codificação
-		}
+		char[] caracteres = textoOriginal.toCharArray();
 		
-		assertEquals(textoCodificado,codificacao);
-	}*/
+		String [][] dicionario = arvoreFinal.getDicionario();
+		
+		StringBuilder textoCodificado = new StringBuilder();
+		for(int i=0; i<caracteres.length; i++)
+			textoCodificado.append(dicionario[caracteres[i]][1]);	
+		
+		assertEquals(codigoEsperado,textoCodificado.toString());
+	}
 	
 	@Test
 	public void testDecodificarTexto(){
 		
 		Fila fila = CriarObjetos.criarFila();
-		NoArvore[] vetorAux = CriarObjetos.criarVetor();
-		
+				
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
 		
-		String codificacao = "00" //Barra de espaço
-				+ "010" //A
-				+ "0110" //T
-				+"01110" //\n 
+		String codigo = "10" //S
 				+ "01111" //U
-				+ "10" //S	
+				+ "10" //S
 				+ "110" //I
+				+ "1111" // E
+				+ "00" //espaço
+				+ "10" //S
+				+ "010" //A
 				+ "1110" //Y
-				+ "1111"; //E
+				+ "10" //S
+				+ "00" //espaço
+				+ "110" //I
+				+ "0110" //T
+				+ "10" //S
+				+ "00" //espaço
+				+ "1111" //E
+				+ "010" //A
+				+ "10" //S
+				+ "1110"; //Y
+		String textoEsperado = "SUSIE SAYS ITS EASY";
 		
-		String obtida;
+		String textoObtido = arvoreFinal.decodificarCaractere(arvoreFinal.getRaiz(), codigo);	
 		
-		obtida = arvoreFinal.decodificarCaractere(arvoreFinal.getRaiz(), codificacao);
-		
-		String gabarito = " AT\nUSIYE";
-		
-		assertEquals(gabarito,obtida);
+		assertEquals(textoEsperado, textoObtido);
 		
 	}
 	

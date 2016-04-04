@@ -115,10 +115,10 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 
 		for(int index=0;index<texto.length();index++){
 
-			if(index=='0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
+			if(texto.charAt(index) == '0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
 				noAtual = noAtual.getFilhoEsq();
 			}
-			else if(index == '1'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a direita
+			else if(texto.charAt(index) == '1'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a direita
 				noAtual = noAtual.getFilhoDir();
 			}	
 			if(noAtual.getLetra()!= '\0'){
