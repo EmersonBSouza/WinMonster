@@ -2,8 +2,6 @@ package br.uefs.WinMonster.controller;
 
 import java.io.File;
 import java.util.BitSet;
-
-import br.uefs.WinMonster.model.Compactador;
 import br.uefs.WinMonster.util.*;
 
 public class WinController {
@@ -35,22 +33,32 @@ public class WinController {
 
 		int tamanho = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.setDicionario(new String[256][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
-
+		
+		String[] textoDividido;
 		StringBuilder textoCodificado = new StringBuilder();
 		String[][] dicionario = arvoreFinal.getDicionario();
 				
-		for(int i=0;i < texto.length();i++){
-			textoCodificado.append(dicionario[(int)texto.charAt(i)][1]);
+		for(int i=0;i < texto.length();i+=80000){
+			if(i+80000<texto.length()){
+				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, i+80000)));
+				arquivo.salvarBytes(textoCodificado.toString(), null, arquivoOriginal);
+				textoCodificado.delete(0, textoCodificado.length());
+			}
+			else{
+				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, texto.length())));
+				arquivo.salvarBytes(textoCodificado.toString(), arvoreFinal, arquivoOriginal);
+			}
+		}	
+			/*textoCodificado.append(dicionario[(int)texto.charAt(i)][1]);
 			
 			if(textoCodificado.length() > 30000){
 				arquivo.salvarBytes(textoCodificado.toString(),null, arquivoOriginal);
 				textoCodificado.delete(0, textoCodificado.length());
-			}	
-		}
+			}*/
 		
-		arquivo.salvarBytes(textoCodificado.toString(),arvoreFinal ,arquivoOriginal);
+		
+		//arquivo.salvarBytes(textoCodificado.toString(),arvoreFinal ,arquivoOriginal);
 		
 	}
 
@@ -74,7 +82,7 @@ public class WinController {
 		StringBuffer textoOriginal = new StringBuffer();
 		
 		for(int i=0;i<decodificada.length();i++){
-			textoOriginal.append(arvore.decodificarCaractere(arvore.getRaiz(), decodificada));
+			textoOriginal.append(arvore.decodificarMensagem(arvore.getRaiz(), decodificada));
 			
 		}
 		

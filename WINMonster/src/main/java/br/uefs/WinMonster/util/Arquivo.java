@@ -44,7 +44,7 @@ public class Arquivo implements Persistencia{
 			bufferEscrever.writeObject(conjuntoBits);
 			bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
-				bufferEscrever.writeChars("/%|%/");
+				bufferEscrever.writeChars("/%%|%%/");
 				bufferEscrever.writeObject(objeto);
 			}
 			bufferEscrevertexto.close();
@@ -111,8 +111,14 @@ public class Arquivo implements Persistencia{
 		try {
 			if(objeto instanceof BitSet)
 				objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivo)).readObject();
-			else if(objeto instanceof ArvoreHuffman)
+			else if(objeto instanceof ArvoreHuffman){
+				
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivo));
+				while(in.readObject()!= "/%%|%%/"){
+					in.read();
+				}
 				objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivo)).readObject();
+			}
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
