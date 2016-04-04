@@ -1,6 +1,8 @@
 package br.uefs.WinMonster.util;
 
-public class NoArvore implements Comparable<NoArvore>{
+import java.io.Serializable;
+
+public class NoArvore implements Comparable<NoArvore> ,Serializable{
 
 	private char letra;
 	private int frequencia;

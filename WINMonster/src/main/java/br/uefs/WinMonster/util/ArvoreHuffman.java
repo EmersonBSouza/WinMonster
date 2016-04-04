@@ -1,6 +1,8 @@
 package br.uefs.WinMonster.util;
 
-public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
+import java.io.Serializable;
+
+public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 
 	private NoArvore raiz;
 	private String [][] dicionario;
@@ -107,34 +109,25 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>{
 		return null;
 	}*/
 	
-	public String decodificarCaractere(NoArvore No,String codigo){
-		String decodificacao = "";
-		NoArvore raiz = No;
+	public String decodificarCaractere(NoArvore noRaiz,String texto){
+		StringBuilder decodificacao = new StringBuilder();
+		NoArvore noAtual = noRaiz;
 
-		for(char index :codigo.toCharArray()){
+		for(int index=0;index<texto.length();index++){
 
 			if(index=='0'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a esquerda
-				if(No.getFilhoEsq().getFilhoEsq()== null){//Verifica se é um nó do tipo folha
-					decodificacao += No.getFilhoEsq().getLetra();//Se for uma folha, o valor da letra é obtido e guardado na String de decodificação
-					No = raiz;//Retorna para a raiz da árvore
-				}
-
-				else{ 
-					No = No.getFilhoEsq();//Movimenta para a esquerda da árvore
-				}
+				noAtual = noAtual.getFilhoEsq();
 			}
 			else if(index == '1'){//Se o caractere atual da String for 0, o deslocamento na árvore é feito para a direita
-				if(No.getFilhoDir().getFilhoDir()==null){//Verifica se é um nó do tipo folha
-					decodificacao += No.getFilhoDir().getLetra();//Se for uma folha, o valor da letra é obtido e guardado na String de decodificação
-					No = raiz;//Retorna para a raiz da árvore
-				}
-				else{
-					No=No.getFilhoDir();//Movimenta para a direita da árvore
-				}		
-			}			
+				noAtual = noAtual.getFilhoDir();
+			}	
+			if(noAtual.getLetra()!= '\0'){
+				decodificacao.append(noAtual.getLetra());
+				noAtual = noRaiz;
+			}		
 		}
 
-		return decodificacao;//Retorna a String concluída
+		return decodificacao.toString();//Retorna a String concluída
 	}
 	
 	/**

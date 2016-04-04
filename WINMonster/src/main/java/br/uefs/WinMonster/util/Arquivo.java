@@ -18,10 +18,11 @@ import java.util.BitSet;
 public class Arquivo implements Persistencia{
 
 	@Override
-	public void salvarBytes(String texto, File arquivoOriginal) {
+	public void salvarBytes(String texto, Object objeto, File arquivoOriginal) {
 		
-		String nomeAnterior = arquivoOriginal.getName();
-		File arquivo = new File(nomeAnterior+" Compactado.txt");
+		String nomeAnterior = arquivoOriginal.getPath();
+		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
+		File arquivo = new File(nomeAnterior.replace(extensao, ".wmn"));
 		File arquivo2 = new File("arquivo2");
 		BitSet conjuntoBits = new BitSet();
 		
@@ -42,21 +43,24 @@ public class Arquivo implements Persistencia{
 
 			bufferEscrever.writeObject(conjuntoBits);
 			bufferEscrevertexto.write(texto.toString());
-			
+			if(objeto!=null){
+				bufferEscrever.writeChars("/%|%/");
+				bufferEscrever.writeObject(objeto);
+			}
 			bufferEscrevertexto.close();
 			bufferEscrever.close();
 			escrever.close();
 		}catch(IOException e){
 			
 		}
+		
 	}
 
 	@Override
 	public void salvarTexto(String texto, File arquivoOriginal) {
 		
-		File arquivo = new File("compactado.txt");//Rever isso aqui ainda
-		File dir = arquivoOriginal.getParentFile();
-		dir.mkdirs();
+		String nomeAnterior = arquivoOriginal.getName();
+		File arquivo = new File(nomeAnterior+" Compactado.txt");
 		
 		try {
 			
@@ -102,32 +106,18 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public BitSet lerBytes(File arquivo) {
+	public Object lerBytes(Object objeto,File arquivo) {
 				
-		BitSet bitset = new BitSet();
 		try {
-			bitset = (BitSet) new ObjectInputStream(new FileInputStream("arquivo.txt")).readObject();
-			
+			if(objeto instanceof BitSet)
+				objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivo)).readObject();
+			else if(objeto instanceof ArvoreHuffman)
+				objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivo)).readObject();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		return bitset;
+		return objeto;
 		
-	}
-
-	@Override
-	public BitSet converterBits(String texto) {
-	
-		BitSet bits = new BitSet(texto.length());
-		
-		for(char c : texto.toCharArray()){
-			if(c == '0')
-				bits.set(c,false);//Transforma em bit '0'
-			else
-				bits.set(c,true);//Transforma em bit '1'
-		}
-
-		return bits;
 	}
 
 }
