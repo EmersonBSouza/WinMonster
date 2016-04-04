@@ -72,7 +72,6 @@ public class ArvoreHuffmanTest {
 		//Cria-se uma árvore de Huffman com a fila gerada
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.setDicionario(new String[256][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(),new StringBuffer());
 
 		String textoOriginal = "SUSIE SAYS ITS EASY";
@@ -136,7 +135,7 @@ public class ArvoreHuffmanTest {
 				+ "1110"; //Y
 		String textoEsperado = "SUSIE SAYS ITS EASY";
 		
-		String textoObtido = arvoreFinal.decodificarCaractere(arvoreFinal.getRaiz(), codigo);	
+		String textoObtido = arvoreFinal.decodificarMensagem(arvoreFinal.getRaiz(), codigo);	
 		
 		assertEquals(textoEsperado, textoObtido);
 		
@@ -149,7 +148,6 @@ public class ArvoreHuffmanTest {
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		int quantidadeDeCaracteres = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.setDicionario(new String[256][2]);
 		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
 		
 		//(EDIT) Agora segue a ordem da tabela Ascii, assim como a String gabarito

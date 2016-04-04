@@ -40,14 +40,15 @@ public class WinController {
 		String[][] dicionario = arvoreFinal.getDicionario();
 				
 		for(int i=0;i < texto.length();i+=80000){
-			if(i+80000<texto.length()){
-				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, i+80000)));
-				arquivo.salvarBytes(textoCodificado.toString(), null, arquivoOriginal);
+			if(i+80000>texto.length()){
+				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, texto.length())));
+				arquivo.salvarBytes(textoCodificado.toString(), arvoreFinal, arquivoOriginal);
 				textoCodificado.delete(0, textoCodificado.length());
 			}
 			else{
-				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, texto.length())));
-				arquivo.salvarBytes(textoCodificado.toString(), arvoreFinal, arquivoOriginal);
+				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, i+80000)));
+				arquivo.salvarBytes(textoCodificado.toString(), null, arquivoOriginal);
+				textoCodificado.delete(0, textoCodificado.length());
 			}
 		}	
 			/*textoCodificado.append(dicionario[(int)texto.charAt(i)][1]);
@@ -70,21 +71,21 @@ public class WinController {
 		conjuntoBits = (BitSet) arquivo.lerBytes(conjuntoBits,arquivoOriginal);
 		arvore = (ArvoreHuffman)arquivo.lerBytes(arvore, arquivoOriginal);
 		
-		String decodificada = new String();
+		StringBuilder decodificada = new StringBuilder();
 		
-		for(int i=0; i<conjuntoBits.length();i++){
+		for(int i=0; i<conjuntoBits.length()-1;i++){
 			if(conjuntoBits.get(i)== true)
-				decodificada += '1';
+				decodificada.append('1');
 			else
-				decodificada +='0';
+				decodificada.append('0');
 			
 		}
 		StringBuffer textoOriginal = new StringBuffer();
 		
-		for(int i=0;i<decodificada.length();i++){
-			textoOriginal.append(arvore.decodificarMensagem(arvore.getRaiz(), decodificada));
+		//for(int i=0;i<decodificada.length();i++){
+			textoOriginal.append(arvore.decodificarMensagem(arvore.getRaiz(), decodificada.toString()));
 			
-		}
+		
 		
 		arquivo.salvarTexto(textoOriginal.toString(), arquivoOriginal);
 		
