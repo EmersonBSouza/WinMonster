@@ -220,9 +220,9 @@ public class TelaPrincipal {
 
 	public Container criarPainelContainer() {
 		JPanel painel = new JPanel(new BorderLayout());
-		painel.setOpaque(true);
+		painel.setOpaque(false);
 
-		saidas = new JTextArea(400, 400);
+		saidas = new JTextArea(500, 400);
 		saidas.setEditable(true);
 		barraRolagem = new JScrollPane(saidas);
 
@@ -240,7 +240,8 @@ public class TelaPrincipal {
 		frame.add(this.criarPainelContainer());
 		frame.setJMenuBar(this.criarBarraMenu());
 
-		frame.setSize(new Dimension(800, 400));        
+		frame.setSize(new Dimension(500, 400));        
+		frame.setLocation(265, 115);
 		frame.setVisible(true);
 	}
 
