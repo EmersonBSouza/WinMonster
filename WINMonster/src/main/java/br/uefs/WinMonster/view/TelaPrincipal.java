@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -31,7 +32,13 @@ public class TelaPrincipal {
 	private JTextArea saidas;
 	private WinController controller = new WinController();
 
+	
 	private JMenuBar criarBarraMenu() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		JMenu menu = new JMenu("Arquivo");
 		menu.addMenuListener(new MenuListener() {
 			@Override
