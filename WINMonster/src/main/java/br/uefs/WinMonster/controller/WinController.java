@@ -53,8 +53,32 @@ public class WinController {
 		arquivo.salvarBytes(textoCodificado.toString(), arquivoOriginal);
 	}
 
-	public void descompactarArquivo(Object objeto){
-
+	public void descompactarArquivo(File arquivoOriginal){
+		Arquivo arquivo = new Arquivo();
+		BitSet conjuntoBits = arquivo.lerBytes(arquivoOriginal);
+		ArvoreHuffman arvore = new ArvoreHuffman();
+		
+		String decodificada = new String();
+		
+		for(int i=0; i<conjuntoBits.length();i++){
+			if(conjuntoBits.get(i)== true)
+				decodificada += '1';
+			else
+				decodificada +='0';
+			
+		}
+		StringBuffer textoOriginal = new StringBuffer();
+		
+		for(int i=0;i<decodificada.length();i++){
+			textoOriginal.append(arvore.decodificarCaractere(No, decodificada.charAt(i)));
+			
+			if(textoOriginal.length()>30000){
+				arquivo.salvarTexto(textoOriginal.toString(), arquivoOriginal);
+			}
+		}
+		
+		arquivo.salvarTexto(textoOriginal.toString(), arquivoOriginal);
+		
 	}
 
 	public boolean verificarIntegridade(String x, String y) {
