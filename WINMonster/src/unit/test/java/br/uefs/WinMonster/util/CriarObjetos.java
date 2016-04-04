@@ -18,6 +18,28 @@ public class CriarObjetos {
 		return fila;	
 	}
 	
+	public static Lista criarLista() {
+		String nome1 = "João";
+		String nome2 = "Maria";
+		String nome3 = "Zuleica";
+		String nome4 = "Lokisley";
+		String nome5 = "Bruno";
+		String nome6 = "Ana";
+		String nome7 = "Daniel";
+		String nome8 = "Isabela";
+		Lista lista = new Lista();
+		lista.inserirFinal(nome1);
+		lista.inserirFinal(nome2);
+		lista.inserirFinal(nome3);
+		lista.inserirFinal(nome4);
+		lista.inserirFinal(nome5);
+		lista.inserirFinal(nome6);
+		lista.inserirFinal(nome7);
+		lista.inserirFinal(nome8);
+		return lista;
+		
+	}
+	
 	public static NoArvore[] criarVetor(){
 		
 		/* Criamos um vetor e nós com os caracteres da frase e suas frequências.

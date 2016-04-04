@@ -5,14 +5,12 @@ public class Celula{
 		private Object objeto;
 		private Celula proximo;
 		
-		//private getCassio();
-
 		/**
 		 * Recupera um objeto
 		 * @return objeto
 		 */
 		public Object getObjeto(){
-			return objeto;
+			return this.objeto;
 		}
 		
 		/**
