@@ -72,9 +72,7 @@ public class TelaPrincipal {
 		itemMenu.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				JFileChooser escolhedor = new JFileChooser();
-				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","java");
-				escolhedor.setFileFilter(filtro);
+				EscolhedorWinMonster escolhedor = new EscolhedorWinMonster();
 				int retorno = escolhedor.showOpenDialog(saidas);
 				if(retorno == escolhedor.APPROVE_OPTION){
 					controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
