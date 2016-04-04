@@ -23,7 +23,7 @@ public class Arquivo implements Persistencia{
 		String nomeAnterior = arquivoOriginal.getPath();
 		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
 		File arquivo = new File(nomeAnterior.replace(extensao, ".wmn"));
-		File arquivoTree = new File(nomeAnterior.replace(extensao, ".wmnt"));
+		//File arquivoTree = new File(nomeAnterior.replace(extensao, ".wmnt"));
 		File arquivo2 = new File("arquivo2");
 		BitSet conjuntoBits = new BitSet();
 		int i=0;
@@ -48,7 +48,7 @@ public class Arquivo implements Persistencia{
 			bufferEscrever.writeObject(conjuntoBits);
 			bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
-				FileOutputStream arvore = new FileOutputStream(arquivoTree,true);
+				FileOutputStream arvore = new FileOutputStream(arquivo,true);
 				ObjectOutputStream bufferArvore = new ObjectOutputStream(arvore);
 				//bufferEscrever.writeChars("/%%|%%/");
 				bufferArvore.writeObject(objeto);
@@ -67,7 +67,7 @@ public class Arquivo implements Persistencia{
 	public void salvarTexto(String texto, File arquivoOriginal) {
 		
 		String nomeAnterior = arquivoOriginal.getName();
-		File arquivo = new File(nomeAnterior+" Compactado.txt");
+		File arquivo = new File(nomeAnterior+".txt");
 		
 		try {
 			
@@ -115,25 +115,35 @@ public class Arquivo implements Persistencia{
 	@Override
 	public Object lerBytes(Object objeto,File arquivoOriginal) {
 		
-		String nomeArvore = arquivoOriginal.getPath();
-		String extensao = nomeArvore.substring(nomeArvore.lastIndexOf('.'));
-		
-		File arquivoArvore = new File(nomeArvore.replace(extensao, ".wmnt"));	
 		try {
-			if(objeto instanceof BitSet)
-				objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();
-			else if(objeto instanceof ArvoreHuffman){
-				
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoArvore));
-				//objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivo)).readObject();
-				objeto = (ArvoreHuffman)in.readObject();
-				in.close();
-			}
+			objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();	
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
 		return objeto;
 		
+	}
+	
+	public ArvoreHuffman lerArvore(ArvoreHuffman arvore,File arquivoOriginal){
+		
+		ObjectInputStream in;
+		try {
+			in = new ObjectInputStream(new FileInputStream(arquivoOriginal));
+			in.readObject();
+			arvore = (ArvoreHuffman)in.readObject();
+			in.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//in.readObject();
+		//objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return arvore;
 	}
 
 }

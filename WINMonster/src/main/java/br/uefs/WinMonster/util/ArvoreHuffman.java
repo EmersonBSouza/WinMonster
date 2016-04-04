@@ -83,13 +83,13 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 		dicionario[(int)letra][1] = codigo;
 	}
 	
-		public String codificarMensagem(String texto){
-			StringBuilder textoCodificado = new StringBuilder();
-			for(int i=0;i<texto.length();i++){
-				textoCodificado.append(this.dicionario[(int)texto.charAt(i)][1]);
-			}
-			return textoCodificado.toString();
+	public String codificarMensagem(String texto){
+		StringBuilder textoCodificado = new StringBuilder();			
+		for(int i=0;i<texto.length();i++){
+			textoCodificado.append(this.dicionario[(int)texto.charAt(i)][1]);
 		}
+		return textoCodificado.toString();
+	}
 	
 	public String decodificarMensagem(NoArvore noRaiz,String texto){
 		StringBuilder decodificacao = new StringBuilder();
