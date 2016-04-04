@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 
 	private NoArvore raiz;
-	private String [][] dicionario;
+	private String [][] dicionario = new String[256][2];
 
 	/**
 	 * Cria uma árvore de Huffman
@@ -83,33 +83,15 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 		dicionario[(int)letra][1] = codigo;
 	}
 	
-	/*public String codificarCaractere(NoArvore No,StringBuffer construtorCodigo,char original){
-
-		if(No.getFilhoDir()== null && No.getFilhoEsq()== null){//Se o nó for uma folha, este contém a letra a ser codificada
-			if(No.getLetra()== original){//Se a letra for igual à letra desejada, a string final é retornada 
-				return construtorCodigo.toString();//Isso só irá acontecer ao final das chamadas recursivas
+		public String codificarMensagem(String texto){
+			StringBuilder textoCodificado = new StringBuilder();
+			for(int i=0;i<texto.length();i++){
+				textoCodificado.append(this.dicionario[(int)texto.charAt(i)][1]);
 			}
-		}else{
-
-			//Percorre a esquerda da árvore
-			construtorCodigo.append('0');//Concatena "0" à string que está sendo construída, representando que o elemento está à esquerda
-			String esquerda = codificarCaractere(No.getFilhoEsq(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
-			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
-
-			//Percorre a direita da árvore
-			construtorCodigo.append('1');//Concatena "1" à string que está sendo construída, representando que o elemento está à direita
-			String direita = codificarCaractere(No.getFilhoDir(),construtorCodigo,original);//Chama o metodo recursivamente, para realizar a verificação sobre qual tipo de nó está sendo tratado folha/pai
-			construtorCodigo.deleteCharAt(construtorCodigo.length()-1);//Remove o elemento indesejado que foi concatenado durante a criação da string
-
-			if(esquerda == null)
-				return direita;
-			else
-				return esquerda;
+			return textoCodificado.toString();
 		}
-		return null;
-	}*/
 	
-	public String decodificarCaractere(NoArvore noRaiz,String texto){
+	public String decodificarMensagem(NoArvore noRaiz,String texto){
 		StringBuilder decodificacao = new StringBuilder();
 		NoArvore noAtual = noRaiz;
 

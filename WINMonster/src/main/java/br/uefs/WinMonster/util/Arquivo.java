@@ -23,10 +23,11 @@ public class Arquivo implements Persistencia{
 		String nomeAnterior = arquivoOriginal.getPath();
 		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
 		File arquivo = new File(nomeAnterior.replace(extensao, ".wmn"));
+		File arquivoTree = new File(nomeAnterior.replace(extensao, ".wmnt"));
 		File arquivo2 = new File("arquivo2");
 		BitSet conjuntoBits = new BitSet();
-		
-		for(int i = 0; i < texto.length();i++){
+		int i=0;
+		for(i = 0; i < texto.length();i++){
 			if(texto.charAt(i) == '1'){
 				conjuntoBits.set(i,true);
 			}
@@ -34,18 +35,24 @@ public class Arquivo implements Persistencia{
 				conjuntoBits.set(i,false);
 			}
 		}
+		conjuntoBits.set(i,true);
 		try{
 			FileOutputStream escrever = new FileOutputStream(arquivo,true);
+			
 			FileWriter escreverTexto = new FileWriter(arquivo2,true);
 			
 			ObjectOutputStream bufferEscrever = new ObjectOutputStream(escrever);
+			
 			BufferedWriter bufferEscrevertexto = new BufferedWriter(escreverTexto);
 
 			bufferEscrever.writeObject(conjuntoBits);
 			bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
-				bufferEscrever.writeChars("/%|%/");
-				bufferEscrever.writeObject(objeto);
+				FileOutputStream arvore = new FileOutputStream(arquivoTree,true);
+				ObjectOutputStream bufferArvore = new ObjectOutputStream(arvore);
+				//bufferEscrever.writeChars("/%%|%%/");
+				bufferArvore.writeObject(objeto);
+				bufferArvore.close();
 			}
 			bufferEscrevertexto.close();
 			bufferEscrever.close();
@@ -106,13 +113,22 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public Object lerBytes(Object objeto,File arquivo) {
-				
+	public Object lerBytes(Object objeto,File arquivoOriginal) {
+		
+		String nomeArvore = arquivoOriginal.getPath();
+		String extensao = nomeArvore.substring(nomeArvore.lastIndexOf('.'));
+		
+		File arquivoArvore = new File(nomeArvore.replace(extensao, ".wmnt"));	
 		try {
 			if(objeto instanceof BitSet)
-				objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivo)).readObject();
-			else if(objeto instanceof ArvoreHuffman)
-				objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivo)).readObject();
+				objeto = (BitSet) new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();
+			else if(objeto instanceof ArvoreHuffman){
+				
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoArvore));
+				//objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivo)).readObject();
+				objeto = (ArvoreHuffman)in.readObject();
+				in.close();
+			}
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
