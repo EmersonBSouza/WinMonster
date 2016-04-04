@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -77,8 +78,10 @@ public class TelaPrincipal {
 				if(retorno == escolhedor.APPROVE_OPTION){
 					controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
 					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
-					JOptionPane.showMessageDialog(null, "Arquivo compactado com sucesso!");
+					Toolkit.getDefaultToolkit().beep();
+					JOptionPane.showMessageDialog(null, "Arquivo compactado com sucesso!");					
 				}else{
+					Toolkit.getDefaultToolkit().beep();
 					JOptionPane.showMessageDialog(null, "Compactação cancelada");
 				}
 			}
@@ -103,6 +106,7 @@ public class TelaPrincipal {
 				if(retorno == escolhedor.APPROVE_OPTION){
 					controller.descompactarArquivo(escolhedor.getSelectedFile());
 					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
+					Toolkit.getDefaultToolkit().beep();
 					JOptionPane.showMessageDialog(null, "Descompactação concluída!");
 				}else{
 					JOptionPane.showMessageDialog(null, "Descompactação cancelada");
