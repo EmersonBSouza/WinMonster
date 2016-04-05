@@ -48,11 +48,9 @@ public class Arquivo implements Persistencia{
 			bufferEscrever.writeObject(conjuntoBits);
 			bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
-				FileOutputStream arvore = new FileOutputStream(arquivo,true);
-				ObjectOutputStream bufferArvore = new ObjectOutputStream(arvore);
-				//bufferEscrever.writeChars("/%%|%%/");
-				bufferArvore.writeObject(objeto);
-				bufferArvore.close();
+				bufferEscrever.writeInt(777);
+				bufferEscrever.writeObject(objeto);
+				//bufferArvore.close();
 			}
 			bufferEscrevertexto.close();
 			bufferEscrever.close();
@@ -66,8 +64,9 @@ public class Arquivo implements Persistencia{
 	@Override
 	public void salvarTexto(String texto, File arquivoOriginal) {
 		
-		String nomeAnterior = arquivoOriginal.getName();
-		File arquivo = new File(nomeAnterior+".txt");
+		String nomeAnterior = arquivoOriginal.getPath()+arquivoOriginal.getName();
+		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
+		File arquivo = new File(nomeAnterior);//Rever a saída
 		
 		try {
 			
@@ -124,14 +123,14 @@ public class Arquivo implements Persistencia{
 		
 	}
 	
-	public ArvoreHuffman lerArvore(ArvoreHuffman arvore,File arquivoOriginal){
+	public ArvoreHuffman lerArvore(Object arvore,File arquivoOriginal){
 		
-		ObjectInputStream in;
 		try {
-			in = new ObjectInputStream(new FileInputStream(arquivoOriginal));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoOriginal));
 			in.readObject();
-			arvore = (ArvoreHuffman)in.readObject();
-			in.close();
+			in.readInt();
+			arvore = in.readObject();
+			
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -143,7 +142,7 @@ public class Arquivo implements Persistencia{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return arvore;
+		return (ArvoreHuffman) arvore;
 	}
 
 }
