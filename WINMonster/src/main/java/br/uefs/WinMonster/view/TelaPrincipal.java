@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -209,9 +212,9 @@ public class TelaPrincipal {
             
         });
 		submenu.add(botaoRadio);
-
+	
 		menu.add(submenu);
-		
+				
 		return barraMenu;
 
 	}
@@ -219,7 +222,7 @@ public class TelaPrincipal {
 
 
 	public Container criarPainelContainer() {
-		JPanel painel = new JPanel(new BorderLayout());
+		JPanel painel = new JPanel(null);
 		painel.setOpaque(false);
 
 		saidas = new JTextArea(500, 400);
@@ -234,15 +237,20 @@ public class TelaPrincipal {
 
 
 	public void criarTela() {
+		SplashScreen splash = new SplashScreen(5000);
+		splash.mostrarSplashESair();
 		JFrame frame = new JFrame("Win Monster");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		frame.add(this.criarPainelContainer());
 		frame.setJMenuBar(this.criarBarraMenu());
-
+		URL url = this.getClass().getResource("logo.png");  
+		Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);  
+		frame.setIconImage(iconeTitulo);
 		frame.setSize(new Dimension(500, 400));        
 		frame.setLocation(265, 115);
 		frame.setVisible(true);
+		
+		
 	}
 
 	public static void main(String[] args) {
