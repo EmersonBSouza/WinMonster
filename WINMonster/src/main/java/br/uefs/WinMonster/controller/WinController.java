@@ -64,9 +64,9 @@ public class WinController {
 				fila.inserirComPrioridade(arvore);
 			}
 		}*/
-
+		int quantidadeDeCaracteres = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
+		arvoreFinal.setDicionario(arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer(), new String[quantidadeDeCaracteres][2]));
 		Lista lista = new Lista();
 		String[] textoDividido;
 		StringBuilder textoCodificado = new StringBuilder();

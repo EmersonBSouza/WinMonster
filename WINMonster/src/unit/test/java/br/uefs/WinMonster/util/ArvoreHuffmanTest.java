@@ -71,8 +71,8 @@ public class ArvoreHuffmanTest {
 				
 		//Cria-se uma árvore de Huffman com a fila gerada
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
+		int tamanhoFila = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(),new StringBuffer());
 
 		String textoOriginal = "SUSIE SAYS ITS EASY";
 		String codigoEsperado = "10" //S
@@ -97,11 +97,18 @@ public class ArvoreHuffmanTest {
 		
 		char[] caracteres = textoOriginal.toCharArray();
 		
-		String [][] dicionario = arvoreFinal.getDicionario();
+		String [][] dicionario = arvoreFinal.criarDicionario(arvoreFinal.getRaiz(),new StringBuffer(), new String[tamanhoFila][2]);
+
 		
 		StringBuilder textoCodificado = new StringBuilder();
-		for(int i=0; i<caracteres.length; i++)
-			textoCodificado.append(dicionario[caracteres[i]][1]);	
+		for(int i=0; i<caracteres.length; i++) {
+			int posicaoAtual = 0;
+			String caractereAtual = Character.toString(caracteres[i]);
+			while(!dicionario[posicaoAtual][0].equals(caractereAtual)) {
+				posicaoAtual++;
+			}
+			textoCodificado.append(dicionario[posicaoAtual][1]);
+		}
 		
 		assertEquals(codigoEsperado,textoCodificado.toString());
 	}
@@ -147,11 +154,12 @@ public class ArvoreHuffmanTest {
 		//Cria-se uma árvore de Huffman com a fila gerada
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
 		int quantidadeDeCaracteres = fila.obterTamanho();
+		int tamanhoFila = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
-		arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer());
+		
 		
 		//(EDIT) Agora segue a ordem da tabela Ascii, assim como a String gabarito
-		String codificacao =   "01110" //\n
+		String codificacao =  /* "01110" //\n
 							  +"00" //Barra de espaço 
 							  + "010" //A
 							  + "1111" //E
@@ -160,7 +168,7 @@ public class ArvoreHuffmanTest {
 							  + "0110" //T	
 							  + "01111" //U
 							  + "1110" ;//Y
-				/*"00" //Barra de espaço
+*/				"00" //Barra de espaço
 				+ "010" //A
 				+ "0110" //T
 				+"01110" //\n 
@@ -170,25 +178,21 @@ public class ArvoreHuffmanTest {
 				+ "1110" //Y
 				+ "1111"; //E*/
 		
-		String [][] teste = arvoreFinal.getDicionario();//Recebe o dicionário
+		String [][] dicionario = arvoreFinal.criarDicionario(arvoreFinal.getRaiz(), new StringBuffer(), new String[tamanhoFila][2]);
 		String textoObtido = "";//Cria uma string para receber a sequência contida no dicionário;
 		
-		for(int i = 0;i < teste.length;i++){//Percorre o array do dicionário
-			if(teste[i][1]!=null){
-				textoObtido += teste[i][1];//Concatena os códigos recebidos
-			}
-		}
+		for(int i = 0;i < dicionario.length;i++)//Percorre o array do dicionário
+			textoObtido += dicionario[i][1];//Concatena os códigos recebidos
+		
 		
 		assertEquals(codificacao,textoObtido);
 		
-		String gabarito = "\n AEISTUY";
+		String gabarito = " AT\nUSIYE";
 		String caracteresObtidos = "";
 		
-		for(int i = 0;i < teste.length;i++){//Percorre o array do dicionário
-			if(teste[i][0]!=null){
-				caracteresObtidos += teste[i][0];//Concatena os caracteres recebidos
-			}
-		}
+		for(int i = 0;i < dicionario.length;i++)//Percorre o array do dicionário
+				caracteresObtidos += dicionario[i][0];//Concatena os caracteres recebidos
+		
 		
 		assertEquals(gabarito,caracteresObtidos);
 	}
