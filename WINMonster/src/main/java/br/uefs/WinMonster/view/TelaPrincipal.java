@@ -30,6 +30,7 @@ import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import br.uefs.WinMonster.controller.WinController;
+import br.uefs.WinMonster.exceptions.ArquivoCorrompidoException;
 
 public class TelaPrincipal {
 	private JScrollPane barraRolagem;
@@ -107,7 +108,11 @@ public class TelaPrincipal {
 				escolhedor.setFileFilter(filtro);
 				int retorno = escolhedor.showOpenDialog(saidas);
 				if(retorno == escolhedor.APPROVE_OPTION){
-					controller.descompactarArquivo(escolhedor.getSelectedFile());
+					try {
+						controller.descompactarArquivo(escolhedor.getSelectedFile());
+					} catch (ArquivoCorrompidoException e) {
+						JOptionPane.showMessageDialog(null, "Arquivo Corrompido");
+					}
 					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
 					Toolkit.getDefaultToolkit().beep();
 					JOptionPane.showMessageDialog(null, "Descompactação concluída!");

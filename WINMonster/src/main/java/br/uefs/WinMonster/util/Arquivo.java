@@ -18,24 +18,14 @@ import java.util.BitSet;
 public class Arquivo implements Persistencia{
 
 	@Override
-	public void salvarBytes(String texto, Object objeto, File arquivoOriginal) {
+	public void salvarBytes(BitSet conjuntoBits,int hashCode,Object objeto, File arquivoOriginal) {
 		
 		String nomeAnterior = arquivoOriginal.getPath();
 		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
-		File arquivo = new File(nomeAnterior.replace(extensao, ".wmn"));
-		//File arquivoTree = new File(nomeAnterior.replace(extensao, ".wmnt"));
+//		File arquivo = new File(nomeAnterior.replace(extensao, ".wmn"));
+		File arquivo = new File(nomeAnterior+".wmn");
 		File arquivo2 = new File("arquivo2");
-		BitSet conjuntoBits = new BitSet();
-		int i=0;
-		for(i = 0; i < texto.length();i++){
-			if(texto.charAt(i) == '1'){
-				conjuntoBits.set(i,true);
-			}
-			else{
-				conjuntoBits.set(i,false);
-			}
-		}
-		conjuntoBits.set(i,true);
+
 		try{
 			FileOutputStream escrever = new FileOutputStream(arquivo,true);
 			
@@ -46,9 +36,9 @@ public class Arquivo implements Persistencia{
 			BufferedWriter bufferEscrevertexto = new BufferedWriter(escreverTexto);
 
 			bufferEscrever.writeObject(conjuntoBits);
-			bufferEscrevertexto.write(texto.toString());
+			//bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
-				bufferEscrever.writeInt(777);
+				bufferEscrever.writeInt(hashCode);
 				bufferEscrever.writeObject(objeto);
 				//bufferArvore.close();
 			}
@@ -64,9 +54,9 @@ public class Arquivo implements Persistencia{
 	@Override
 	public void salvarTexto(String texto, File arquivoOriginal) {
 		
-		String nomeAnterior = arquivoOriginal.getPath()+arquivoOriginal.getName();
-		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
-		File arquivo = new File(nomeAnterior);//Rever a saída
+		String nomeAnterior = arquivoOriginal.getPath();
+		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf(".wmn"));
+		File arquivo = new File(nomeAnterior.replace(extensao,""));//Rever a saída
 		
 		try {
 			
@@ -143,6 +133,28 @@ public class Arquivo implements Persistencia{
 			e.printStackTrace();
 		}
 		return (ArvoreHuffman) arvore;
+	}
+	public int obterHash(File arquivoOriginal){
+		
+		int hash =0;
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoOriginal));
+			in.readObject();
+			hash = in.readInt();
+			
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//in.readObject();
+		//objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return hash;
 	}
 
 }
