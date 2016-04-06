@@ -6,12 +6,22 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import br.uefs.WinMonster.exceptions.FormatoArquivoInvalidoException;
+
 @SuppressWarnings("serial")
 public class EscolhedorWinMonster extends JFileChooser {
 
 	public EscolhedorWinMonster() {
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","java");
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","html");
 		this.setFileFilter(filtro);
+	}
+	protected boolean leituraPossivel(String extensao) throws FormatoArquivoInvalidoException{
+		if(extensao.equals(".cpp")||extensao.equals(".txt")||extensao.equals(".html")){
+			return true;
+		}
+		else{
+			throw new FormatoArquivoInvalidoException();
+		}
 	}
 	protected JDialog createDialog(Component parent) {
 		JDialog dlg = super.createDialog(parent);

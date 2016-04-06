@@ -18,7 +18,7 @@ import java.util.BitSet;
 public class Arquivo implements Persistencia{
 
 	@Override
-	public void salvarBytes(BitSet conjuntoBits,int hashCode,Object objeto, File arquivoOriginal) {
+	public void salvarBytes(BitSet conjuntoBits,int hashCode,Object objeto, File arquivoOriginal) throws IOException {
 		
 		String nomeAnterior = arquivoOriginal.getPath();
 		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf('.'));
@@ -27,14 +27,10 @@ public class Arquivo implements Persistencia{
 		File arquivo2 = new File("arquivo2");
 
 		try{
-			FileOutputStream escrever = new FileOutputStream(arquivo,true);
-			
-			FileWriter escreverTexto = new FileWriter(arquivo2,true);
-			
+			FileOutputStream escrever = new FileOutputStream(arquivo);
+						
 			ObjectOutputStream bufferEscrever = new ObjectOutputStream(escrever);
 			
-			BufferedWriter bufferEscrevertexto = new BufferedWriter(escreverTexto);
-
 			bufferEscrever.writeObject(conjuntoBits);
 			//bufferEscrevertexto.write(texto.toString());
 			if(objeto!=null){
@@ -42,11 +38,10 @@ public class Arquivo implements Persistencia{
 				bufferEscrever.writeObject(objeto);
 				//bufferArvore.close();
 			}
-			bufferEscrevertexto.close();
 			bufferEscrever.close();
 			escrever.close();
 		}catch(IOException e){
-			
+			throw new IOException();
 		}
 		
 	}
@@ -56,11 +51,13 @@ public class Arquivo implements Persistencia{
 		
 		String nomeAnterior = arquivoOriginal.getPath();
 		String extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf(".wmn"));
-		File arquivo = new File(nomeAnterior.replace(extensao,""));//Rever a saída
-		
+		nomeAnterior = nomeAnterior.replace(extensao,"");
+		extensao = nomeAnterior.substring(nomeAnterior.lastIndexOf("."),nomeAnterior.length());
+		String nomeArquivoNovo = nomeAnterior.replace(extensao,"(1)"+extensao);
+		File arquivo = new File(nomeArquivoNovo);//Rever a saída
 		try {
 			
-			FileWriter escrita = new FileWriter(arquivo,true);
+			FileWriter escrita = new FileWriter(arquivo);
 			BufferedWriter escritaBuffer = new BufferedWriter(escrita);
 			
 			escritaBuffer.write(texto.toString());
@@ -74,7 +71,7 @@ public class Arquivo implements Persistencia{
 	}
 
 	@Override
-	public String lerTexto(String caminho, File arquivo) {
+	public String lerTexto(File arquivo) throws IOException {
 				
 		try {
 			
@@ -90,15 +87,10 @@ public class Arquivo implements Persistencia{
 			leitura.close();
 			return buffer.toString();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new FileNotFoundException();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException();
 		}
-		
-		
-		return null;
 	}
 
 	@Override
@@ -113,7 +105,7 @@ public class Arquivo implements Persistencia{
 		
 	}
 	
-	public ArvoreHuffman lerArvore(Object arvore,File arquivoOriginal){
+	public ArvoreHuffman lerArvore(Object arvore,File arquivoOriginal) throws IOException{
 		
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(arquivoOriginal));
@@ -123,8 +115,7 @@ public class Arquivo implements Persistencia{
 			
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException();
 		}
 		//in.readObject();
 		//objeto = (ArvoreHuffman)new ObjectInputStream(new FileInputStream(arquivoOriginal)).readObject();

@@ -1,19 +1,21 @@
 package br.uefs.WinMonster.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.BitSet;
 
 import br.uefs.WinMonster.exceptions.ArquivoCorrompidoException;
+import br.uefs.WinMonster.exceptions.ArquivoVazioException;
 import br.uefs.WinMonster.model.Compactador;
 import br.uefs.WinMonster.model.Descompactador;
 import br.uefs.WinMonster.util.*;
 
 public class WinController {
 
-	public void compactarArquivo(String caminho,File arquivoOriginal){
+	public void compactarArquivo(File arquivoOriginal) throws ArquivoVazioException, IOException{
 		long tempoInicial = System.currentTimeMillis();
 		Arquivo arquivo = new Arquivo();
-		String texto = arquivo.lerTexto(caminho,arquivoOriginal);
+		String texto = arquivo.lerTexto(arquivoOriginal);
 		Compactador compactador = new Compactador();
 		Fila fila = new Fila();
 		ArvoreHuffman arvoreFinal = new ArvoreHuffman();
@@ -41,6 +43,10 @@ public class WinController {
 				atual.setFrequencia(1);
 				listaDeFrequencias.inserirInicio(atual);
 			}
+		}
+		
+		if(listaDeFrequencias.obterTamanho()==0){
+			throw new ArquivoVazioException();
 		}
 		long tempoLista = System.currentTimeMillis();
 		System.out.printf("Lista em :%.3f s%n", (tempoLista - tempoInicial) / 1000d);
@@ -109,7 +115,7 @@ public class WinController {
 		//arquivo.salvarBytes(textoFinal.toString(), arvoreFinal, arquivoOriginal);
 	}
 
-	public void descompactarArquivo(File arquivoOriginal) throws ArquivoCorrompidoException{
+	public void descompactarArquivo(File arquivoOriginal) throws ArquivoCorrompidoException,NullPointerException, IOException{
 		long tempoInicial = System.currentTimeMillis();
 		Arquivo arquivo = new Arquivo();
 		BitSet conjuntoBits = new BitSet();

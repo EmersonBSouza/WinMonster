@@ -63,7 +63,8 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 				dicionario[posicaoAtual][0] = Character.toString(noAtual.getLetra());
 				dicionario[posicaoAtual][1] = construtorCodigo.toString();
 				//adicionarLetraAoDicionario(noAtual.getLetra(), construtorCodigo.toString());
-				construtorCodigo.deleteCharAt(construtorCodigo.length()-1);
+				if(construtorCodigo.length() > 0)
+					construtorCodigo.deleteCharAt(construtorCodigo.length()-1);
 				return dicionario;
 			}
 			/*Anda para a esquerda da árvore, adicionando 1 ao código*/
@@ -106,7 +107,7 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 		return textoCodificado.toString();
 	}
 	
-	public String decodificarMensagem(NoArvore noRaiz,String texto){
+	public String decodificarMensagem(NoArvore noRaiz,String texto)throws NullPointerException{
 		StringBuilder decodificacao = new StringBuilder();
 		NoArvore noAtual = noRaiz;
 

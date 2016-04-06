@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.ButtonGroup;
@@ -31,6 +32,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import br.uefs.WinMonster.controller.WinController;
 import br.uefs.WinMonster.exceptions.ArquivoCorrompidoException;
+import br.uefs.WinMonster.exceptions.ArquivoVazioException;
+import br.uefs.WinMonster.exceptions.FormatoArquivoInvalidoException;
 
 public class TelaPrincipal {
 	private JScrollPane barraRolagem;
@@ -80,10 +83,21 @@ public class TelaPrincipal {
 				EscolhedorWinMonster escolhedor = new EscolhedorWinMonster();
 				int retorno = escolhedor.showOpenDialog(saidas);
 				if(retorno == escolhedor.APPROVE_OPTION){
-					controller.compactarArquivo(escolhedor.getSelectedFile().getPath(),escolhedor.getSelectedFile());
-					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
-					Toolkit.getDefaultToolkit().beep();
-					JOptionPane.showMessageDialog(null, "Arquivo compactado com sucesso!");					
+					String nomeArquivo = escolhedor.getSelectedFile().getName();
+					String extensao = nomeArquivo.substring(nomeArquivo.lastIndexOf("."), nomeArquivo.length());
+					
+					try{
+						escolhedor.leituraPossivel(extensao);
+						controller.compactarArquivo(escolhedor.getSelectedFile());
+						Toolkit.getDefaultToolkit().beep();
+						JOptionPane.showMessageDialog(null, "Arquivo compactado com sucesso!");
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(null, "Erro ao abrir arquivo");
+					} catch (ArquivoVazioException e) {
+						JOptionPane.showMessageDialog(null, "O arquivo está vazio");
+					} catch(FormatoArquivoInvalidoException e){
+						JOptionPane.showMessageDialog(null, "Não é possível ler esse tipo de arquivo");
+					} 					
 				}else{
 					Toolkit.getDefaultToolkit().beep();
 					JOptionPane.showMessageDialog(null, "Compactação cancelada");
@@ -103,19 +117,31 @@ public class TelaPrincipal {
 		itemMenu.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+				
 				JFileChooser escolhedor = new JFileChooser();
 				FileNameExtensionFilter filtro = new FileNameExtensionFilter("WinMonster File", "wmn");
 				escolhedor.setFileFilter(filtro);
 				int retorno = escolhedor.showOpenDialog(saidas);
+				
 				if(retorno == escolhedor.APPROVE_OPTION){
 					try {
-						controller.descompactarArquivo(escolhedor.getSelectedFile());
+						String nomeArquivo = escolhedor.getSelectedFile().getName();
+						String extensao = nomeArquivo.substring(nomeArquivo.lastIndexOf("."), nomeArquivo.length());
+						if(extensao.equals(".wmn")){
+							controller.descompactarArquivo(escolhedor.getSelectedFile());
+							JOptionPane.showMessageDialog(null, "Descompactação concluída!");
+							Toolkit.getDefaultToolkit().beep();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Não é possível ler esse tipo de arquivo");
+						}
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(null, "Erro ao abrir arquivo");
 					} catch (ArquivoCorrompidoException e) {
 						JOptionPane.showMessageDialog(null, "Arquivo Corrompido");
-					}
-					//saidas.setText(saidas.getText() + "Arquivo compactado com sucesso! -ou não\n");
-					Toolkit.getDefaultToolkit().beep();
-					JOptionPane.showMessageDialog(null, "Descompactação concluída!");
+					} catch (NullPointerException e){
+						JOptionPane.showMessageDialog(null, "Erro: arquivos com codificação Unicode não são aceitos");
+					} 
 				}else{
 					JOptionPane.showMessageDialog(null, "Descompactação cancelada");
 				}
