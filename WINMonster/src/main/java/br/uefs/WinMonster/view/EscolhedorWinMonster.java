@@ -12,11 +12,11 @@ import br.uefs.WinMonster.exceptions.FormatoArquivoInvalidoException;
 public class EscolhedorWinMonster extends JFileChooser {
 
 	public EscolhedorWinMonster() {
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","html");
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de texto", "txt","cpp","html","c");
 		this.setFileFilter(filtro);
 	}
 	protected boolean leituraPossivel(String extensao) throws FormatoArquivoInvalidoException{
-		if(extensao.equals(".cpp")||extensao.equals(".txt")||extensao.equals(".html")){
+		if(extensao.equals(".cpp")||extensao.equals(".txt")||extensao.equals(".html")||extensao.equals(".c")){
 			return true;
 		}
 		else{
