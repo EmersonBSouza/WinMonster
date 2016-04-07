@@ -17,7 +17,6 @@ public class WinController {
 	 * @param File arquivoOriginal
 	 * */
 	public void compactarArquivo(File arquivoOriginal) throws ArquivoVazioException, IOException{
-		long tempoInicial = System.currentTimeMillis();
 		Arquivo arquivo = new Arquivo();
 		String texto = arquivo.lerTexto(arquivoOriginal);
 		Compactador compactador = new Compactador();
@@ -52,10 +51,7 @@ public class WinController {
 		if(listaDeFrequencias.obterTamanho()==0){//Se a lista estiver vazia, retorna uma exceção
 			throw new ArquivoVazioException();
 		}
-		long tempoLista = System.currentTimeMillis();
-		System.out.printf("Lista em :%.3f s%n", (tempoLista - tempoInicial) / 1000d);
 		
-		long tempoInicioArvore = System.currentTimeMillis();
 		iterador = listaDeFrequencias.iterador();
 		while(iterador.temProximo()) {//Neste laço os objetos da lista são inseridos na fila de prioridade
 			atual = (NoArvore) iterador.obterProximo();
@@ -63,8 +59,6 @@ public class WinController {
 			arvore.setRaiz(atual);
 			fila.inserirComPrioridade(arvore);
 		}
-		long tempoFimArvore = System.currentTimeMillis();
-		System.out.printf("Arvore em :%.3f s%n", (tempoFimArvore - tempoInicioArvore) / 1000d);		
 
 		int quantidadeDeCaracteres = fila.obterTamanho();
 		arvoreFinal = arvoreFinal.criaArvore(fila);
@@ -72,7 +66,6 @@ public class WinController {
 		Lista lista = new Lista();
 		StringBuilder textoCodificado = new StringBuilder();
 
-		long tempoStrings = System.currentTimeMillis();
 		for(int i=0;i < texto.length();i+=30000){//Neste laço o texto é processado de forma dividida
 			if(i+30000>texto.length()){
 				textoCodificado.append(arvoreFinal.codificarMensagem(texto.substring(i, texto.length())));
@@ -85,8 +78,6 @@ public class WinController {
 				textoCodificado.delete(0, textoCodificado.length());//Limpa o conteúdo da string
 			}
 		}
-		long tempoFimString = System.currentTimeMillis();
-		System.out.printf("Tempo Strings em :%.3f s%n", (tempoFimString - tempoStrings) / 1000d);
 		iterador = lista.iterador();
 		StringBuilder textoFinal = new StringBuilder();
 		String auxiliar;
@@ -97,14 +88,11 @@ public class WinController {
 		conjuntoBits = compactador.transformarEmBits(textoFinal.toString());//Recebe um BitSet com o texto convertido em bits
 		int hash = compactador.gerarHash(texto);//Chama o método responsável por gerar o código Hash
 		arquivo.salvarBytes(conjuntoBits,hash ,arvoreFinal, arquivoOriginal);//Salva os dados
-		long tempoTotal = System.currentTimeMillis();
-		System.out.printf("Total Compactação em :%.3f s%n", (tempoTotal - tempoInicial) / 1000d);
 	}
 	/**
 	 * Este método é reponsável por gerenciar o processo de descompactação do arquivo
 	 * @param File arquivoOriginal*/
 	public void descompactarArquivo(File arquivoOriginal) throws ArquivoCorrompidoException,NullPointerException, IOException{
-		long tempoInicial = System.currentTimeMillis();
 		Arquivo arquivo = new Arquivo();
 		BitSet conjuntoBits = new BitSet();
 		ArvoreHuffman arvore = new ArvoreHuffman();
@@ -120,10 +108,7 @@ public class WinController {
 		decodificada = descompactador.decodificaBits(conjuntoBits);//Recebe o texto decodificado
 		
 		StringBuffer textoOriginal = new StringBuffer();
-			long tempoDecodifInicial = System.currentTimeMillis();
 		textoOriginal.append(arvore.decodificarMensagem(arvore.getRaiz(), decodificada.toString()));//Chama o método responsável por decodificar a mensagem
-			long tempoTotalDecod = System.currentTimeMillis();
-			System.out.printf("Decodificação texto em :%.3f s%n", (tempoTotalDecod - tempoDecodifInicial) / 1000d);
 		
 		boolean estaIntegro = descompactador.verificarIntegridade(hash,textoOriginal.toString());
 		if(estaIntegro){
@@ -133,8 +118,5 @@ public class WinController {
 			throw new ArquivoCorrompidoException();//Lança a exceção se o arquivo estiver corrompido
 		}
 			
-		long tempoTotal = System.currentTimeMillis();
-		System.out.printf("Total Descompactação em :%.3f s%n", (tempoTotal - tempoInicial) / 1000d);
-
 	}
 }
