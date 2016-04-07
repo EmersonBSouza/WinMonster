@@ -35,7 +35,7 @@ public class SplashScreen extends JWindow {
 		// Constrói o splash screen
 		URL url = this.getClass().getResource("splashScreen.png");  
 		JLabel label = new JLabel(new ImageIcon(url));
-		JLabel copyrt = new JLabel("UEFS 2016, Marcus Aldrey & Emerson Souza", JLabel.CENTER);
+		JLabel copyrt = new JLabel("UEFS - 2016, Marcus Aldrey & Emerson Souza", JLabel.CENTER);
 		copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 		content.add(label);
 		content.add(copyrt, BorderLayout.SOUTH);
