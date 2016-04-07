@@ -90,7 +90,10 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 		dicionario[posicaoAtual][0] = Character.toString(letra);
 		dicionario[posicaoAtual][1] = codigo;
 	}
-	
+	/**
+	 * Este método codifica o texto
+	 * @param String texto
+	 * @return String textoCodificado.toString()*/
 	public String codificarMensagem(String texto){
 		StringBuilder textoCodificado = new StringBuilder();
 		char[] caracteres = texto.toCharArray();
@@ -106,7 +109,12 @@ public class ArvoreHuffman implements Comparable<ArvoreHuffman>,Serializable{
 		}
 		return textoCodificado.toString();
 	}
-	
+	/**
+	 * Este método é responsável por decodificar a mensagem 
+	 * @param NoArvore noRaiz
+	 * @param String texto
+	 * @throws NullPointerException - Acontece se o texto estiver codificado em Unicode
+	 * @return String decodificacao.toString()*/
 	public String decodificarMensagem(NoArvore noRaiz,String texto)throws NullPointerException{
 		StringBuilder decodificacao = new StringBuilder();
 		NoArvore noAtual = noRaiz;

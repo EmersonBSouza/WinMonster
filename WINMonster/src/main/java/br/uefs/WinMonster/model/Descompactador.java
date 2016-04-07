@@ -6,33 +6,35 @@ import br.uefs.WinMonster.exceptions.ArquivoCorrompidoException;
 
 public class Descompactador {
 
-	public String decodificaBits(BitSet conjuntoBits){
-		long tempoInicial = System.currentTimeMillis();
-		
-		
+	/**
+	 * Este método é responsável por transformar um BitSet em uma String com o texto original
+	 * @param BitSet conjuntoBits
+	 * @return String decodificada.toString()*/
+	public String decodificaBits(BitSet conjuntoBits){		
 		StringBuilder decodificada = new StringBuilder();
-		for(int i=0; i<conjuntoBits.length()-1;i++){
+		for(int i=0; i<conjuntoBits.length()-1;i++){//Este laço transforma o conjunto de bits em texto
 			if(conjuntoBits.get(i)== true)
 				decodificada.append('1');
 			else
 				decodificada.append('0');
 		}
-		long tempoFinal = System.currentTimeMillis();
-		System.out.printf("Decodifica Bits em :%.3f s%n", (tempoFinal- tempoInicial) / 1000d);
-		return decodificada.toString();
+		return decodificada.toString();//Retorna a String decodificada
 	}
 	
+	/**
+	 * Este método verifica se o texto está integro
+	 * @param int hashSalvo
+	 * @param String texto
+	 * @throws ArquivoCorrompidoException - Caso o arquivo esteja corrompido
+	 * @return boolean true - retorna true, se o texto estiver integro*/
 	public boolean verificarIntegridade(int hashSalvo,String texto) throws ArquivoCorrompidoException{
-		long tempoInicial = System.currentTimeMillis();
 		
 		int hashAtual = 0;
 		char[] caracteres = texto.toCharArray();
 		for(int i=0;i<texto.length();i++)
 			hashAtual += (caracteres[i]*i)/(i+1);
 		
-		long tempoFinal = System.currentTimeMillis();
-		System.out.printf("Verificação integridade em :%.3f s%n", (tempoFinal- tempoInicial) / 1000d);
-		if(hashSalvo == hashAtual)
+		if(hashSalvo == hashAtual)//Verifica se os códigos são iguais
 			return true;
 		else
 			throw new ArquivoCorrompidoException();
