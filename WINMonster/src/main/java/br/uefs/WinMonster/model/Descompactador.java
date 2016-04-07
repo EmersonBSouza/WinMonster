@@ -2,6 +2,8 @@ package br.uefs.WinMonster.model;
 
 import java.util.BitSet;
 
+import br.uefs.WinMonster.exceptions.ArquivoCorrompidoException;
+
 public class Descompactador {
 
 	public String decodificaBits(BitSet conjuntoBits){
@@ -20,7 +22,7 @@ public class Descompactador {
 		return decodificada.toString();
 	}
 	
-	public boolean verificarIntegridade(int hashSalvo,String texto){
+	public boolean verificarIntegridade(int hashSalvo,String texto) throws ArquivoCorrompidoException{
 		long tempoInicial = System.currentTimeMillis();
 		
 		int hashAtual = 0;
@@ -33,7 +35,7 @@ public class Descompactador {
 		if(hashSalvo == hashAtual)
 			return true;
 		else
-			return false;
+			throw new ArquivoCorrompidoException();
 		
 	}
 }

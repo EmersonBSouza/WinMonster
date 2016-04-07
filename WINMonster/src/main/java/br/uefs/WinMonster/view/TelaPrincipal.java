@@ -14,7 +14,6 @@ import java.net.URL;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -74,7 +73,9 @@ public class TelaPrincipal {
 		barraMenu.add(menu);
 
 		//cria novo item pro menu
-		itemMenu = new JMenuItem("Compactar", new ImageIcon("compactar.jpg"));
+		URL url = this.getClass().getResource("iconeCompactar.png");
+		ImageIcon icone = new ImageIcon(url);
+		itemMenu = new JMenuItem("Compactar", icone);
 		itemMenu.getAccessibleContext().setAccessibleDescription(
 				"Compacta um arquivo de texto");
 		itemMenu.addActionListener( new ActionListener() {
@@ -113,7 +114,9 @@ public class TelaPrincipal {
 		menu.addSeparator();
 
 		//cria outro item para o menu
-		itemMenu = new JMenuItem("Descompactar", new ImageIcon("descompactar.png"));
+		url = this.getClass().getResource("iconeDescompactar.png");
+		icone = new ImageIcon(url);
+		itemMenu = new JMenuItem("Descompactar", icone);
 		itemMenu.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -149,8 +152,21 @@ public class TelaPrincipal {
 
 		});
 		itemMenu.setMnemonic(KeyEvent.VK_B);
-
-
+		menu.add(itemMenu);
+		//cria outro item para o menu
+		url = this.getClass().getResource("iconeSair.png");
+		icone = new ImageIcon(url);
+		itemMenu = new JMenuItem("Sair", icone);
+		
+		itemMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
+		});
+	
 		//adiciona item ao menu
 		menu.add(itemMenu);
 
@@ -168,6 +184,7 @@ public class TelaPrincipal {
 		});
 
 		barraMenu.add(menu);
+		
 		JMenu submenu = new JMenu("Selecionar cor de fundo");
 		
 		ButtonGroup group = new ButtonGroup();
@@ -268,20 +285,18 @@ public class TelaPrincipal {
 
 
 	public void criarTela() {
-		SplashScreen splash = new SplashScreen(5000);
-		splash.mostrarSplashESair();
 		JFrame frame = new JFrame("Win Monster");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this.criarPainelContainer());
 		frame.setJMenuBar(this.criarBarraMenu());
-		URL url = this.getClass().getResource("logo.png");  
-		Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);  
+		URL url = this.getClass().getResource("logo.png"); 
+		Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
 		frame.setIconImage(iconeTitulo);
 		frame.setSize(new Dimension(500, 400));        
 		frame.setLocation(265, 115);
-		frame.setVisible(true);
-		
-		
+		SplashScreen splash = new SplashScreen(5000);
+		splash.mostrarSplashESair();
+		frame.setVisible(true);		
 	}
 
 	public static void main(String[] args) {
