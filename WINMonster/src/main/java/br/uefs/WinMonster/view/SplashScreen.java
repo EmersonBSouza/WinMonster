@@ -1,14 +1,11 @@
 package br.uefs.WinMonster.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,15 +14,17 @@ import javax.swing.JWindow;
 @SuppressWarnings("serial")
 public class SplashScreen extends JWindow {
 
-	int duracao; 
+	private int duracao; 
 
 	public SplashScreen(int duracao) {
 		this.duracao = duracao;
 	}
 
+	/**
+	 * Deixa a splashScreen visível pelo tempo do seu atributo duração
+	 */
 	public void mostrarSplash() {        
 		JPanel content = (JPanel)getContentPane();
-		content.setBackground(Color.white);
 		// Configura a posição e o tamanho da janela
 		int largura = 450;
 		int altura =115;
@@ -42,11 +41,14 @@ public class SplashScreen extends JWindow {
 		content.add(copyrt, BorderLayout.SOUTH);
 		setVisible(true);
 
-		// Espera ate que os recursos estejam carregados
+		// Faz a tela ficar um tempo visível
 		try { Thread.sleep(duracao); } catch (Exception e) {}        
 		setVisible(false);        
 	}
 
+	/**
+	 * Mostra a splashScreen pelo tempo da sua duração e fecha
+	 */
 	public void mostrarSplashESair() {        
 		mostrarSplash();
 		dispose();    
